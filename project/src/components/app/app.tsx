@@ -41,7 +41,7 @@ function App({ cardCount }: AppScreenProps): JSX.Element {
         />
       </Routes>
     </BrowserRouter>
-  )
+  );
 }
 
 export default App;

@@ -1,4 +1,4 @@
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Card from '../../components/card/card';
 import Header from '../../components/header/header';
 
@@ -22,7 +22,7 @@ function CardContainer({ cardCount }: cardContainerProps): JSX.Element {
 function MainPage({ cardCount }: mainPageProps): JSX.Element {
   return (
     <>
-    <Header /> 
+      <Header />
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
@@ -81,7 +81,7 @@ function MainPage({ cardCount }: mainPageProps): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <CardContainer cardCount={cardCount}/>
+              <CardContainer cardCount={cardCount} />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"></section>

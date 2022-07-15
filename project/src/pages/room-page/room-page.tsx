@@ -1,9 +1,7 @@
 import {Link} from 'react-router-dom';
-import {useParams} from 'react-router-dom';
-import Logo from "../../components/logo/logo";
+import Logo from '../../components/logo/logo';
 
 function RoomPage(): JSX.Element {
-  const params = useParams();
 
   return (
     <div className="page">
