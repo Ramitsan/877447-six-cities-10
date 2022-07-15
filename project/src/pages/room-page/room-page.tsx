@@ -1,7 +1,10 @@
 import {Link} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 import Logo from "../../components/logo/logo";
 
-function PropertyPage(): JSX.Element {
+function RoomPage(): JSX.Element {
+  const params = useParams();
+
   return (
     <div className="page">
       <header className="header">
@@ -337,4 +340,4 @@ function PropertyPage(): JSX.Element {
   );
 }
 
-export default PropertyPage;
+export default RoomPage;

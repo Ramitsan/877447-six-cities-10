@@ -3,7 +3,7 @@ import { AppRoute, AuthorizationStatus } from '../../const';
 import MainPage from '../../pages/main-page/main-page';
 import FavoritesPage from '../../pages/favorites-page/favorites-page';
 import LoginPage from '../../pages/login-page/login-page';
-import PropertyPage from '../../pages/property-page/property-page';
+import RoomPage from '../../pages/room-page/room-page';
 import NotFound from '../../pages/404-page/404-page';
 import PrivateRoute from '../private-route/private-route';
 
@@ -32,8 +32,8 @@ function App({ cardCount }: AppScreenProps): JSX.Element {
           element={<LoginPage />}
         />
         <Route
-          path={AppRoute.Property}
-          element={<PropertyPage />}
+          path={AppRoute.Room}
+          element={<RoomPage />}
         />
         <Route
           path="*"
