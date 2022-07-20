@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import Header from '../../components/header/header';
-import CardList from '../../components/cardList/cardList';
+import CardList from '../../components/card-list/card-list';
 import { Offer } from '../../types/offer';
 
 type MainPageProps = {
