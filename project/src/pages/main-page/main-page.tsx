@@ -1,25 +1,14 @@
 import { Link } from 'react-router-dom';
-import Card from '../../components/card/card';
 import Header from '../../components/header/header';
+import CardList from '../../components/cardList/cardList';
+import { Offer } from '../../types/offer';
 
-type mainPageProps = {
+type MainPageProps = {
   cardCount: number;
-}
-type cardContainerProps = { cardCount: number };
-
-function CardContainer({ cardCount }: cardContainerProps): JSX.Element {
-  const cards: Array<JSX.Element> = [];
-  for (let i = 0; i < cardCount; i++) {
-    cards.push(<Card />);
-  }
-  return (
-    <div className="cities__places-list places__list tabs__content">
-      {cards}
-    </div>
-  );
+  offers: Offer[];
 }
 
-function MainPage({ cardCount }: mainPageProps): JSX.Element {
+function MainPage({ cardCount, offers }: MainPageProps): JSX.Element {
   return (
     <>
       <Header />
@@ -81,7 +70,7 @@ function MainPage({ cardCount }: mainPageProps): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <CardContainer cardCount={cardCount} />
+              <CardList cardCount={cardCount} offers={offers}/>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"></section>
