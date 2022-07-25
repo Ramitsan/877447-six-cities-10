@@ -22,7 +22,7 @@ export const offers: Offer[] = [
     id: 1,
     images: ['img/apartment-01.jpg'],
     isFavorite: true,
-    isPremium: false,
+    isPremium: true,
     location: {
       latitude: 52.35514938496378,
       longitude: 4.673877537499948,
@@ -31,7 +31,7 @@ export const offers: Offer[] = [
     maxAdults: 4,
     previewImage: 'img/apartment-small-03.jpg',
     price: 120,
-    rating: 4.8,
+    rating: 2,
     title: 'Beautiful & luxurious studio at great location',
     type: 'apartment'
   },
@@ -55,7 +55,7 @@ export const offers: Offer[] = [
     },
     id: 2,
     images: ['img/apartment-03.jpg', 'img/room.jpg'],
-    isFavorite: false,
+    isFavorite: true,
     isPremium: true,
     location: {
       latitude: 35.35514938496378,
@@ -99,7 +99,7 @@ export const offers: Offer[] = [
     maxAdults: 2,
     previewImage: 'img/room-small.jpg',
     price: 250,
-    rating: 3.5,
+    rating: 3,
     title: 'Beautiful & luxurious cottage at great location',
     type: 'cottage'
   },
@@ -121,7 +121,7 @@ export const offers: Offer[] = [
       isPro: true,
       name: 'Max',
     },
-    id: 3,
+    id: 4,
     images: ['img/apartment-01.jpg', 'img/apartment-03.jpg'],
     isFavorite: false,
     isPremium: true,

@@ -1,16 +1,17 @@
 import { Link } from 'react-router-dom';
 import { Offer } from '../../types/offer';
-import {isPremium, isFavorite} from '../../utils';
+import {isFavorite} from '../../utils';
+import PremiumMark from '../../components/premium-mark/premium-mark';
+import RaitingStars from '../raiting-stars/raiting-stars';
 
 type FavoriteCardProps = {
-  key: number;
-  offer: Offer;
+   offer: Offer;
 }
 
-export default function FavoriteCard({ key, offer }: FavoriteCardProps): JSX.Element {
+export default function FavoriteCard({ offer }: FavoriteCardProps): JSX.Element {
   return (
-    <article key={key} className="favorites__card place-card">
-      {isPremium(offer, 'place-card')}
+    <article className="favorites__card place-card">
+      <PremiumMark offer={offer} placeCard={'place-card'} />
       <div className="favorites__image-wrapper place-card__image-wrapper">
         <Link to="#">
           <img className="place-card__image" src={offer.previewImage} width="150" height="110" alt="Place" />
@@ -29,14 +30,9 @@ export default function FavoriteCard({ key, offer }: FavoriteCardProps): JSX.Ele
             <span className="visually-hidden">In bookmarks</span>
           </button>
         </div>
-        <div className="place-card__rating rating">
-          <div className="place-card__stars rating__stars">
-            <span style={{ width: '100%' }}></span>
-            <span className="visually-hidden">Rating</span>
-          </div>
-        </div>
+        <RaitingStars rating={offer.rating} />
         <h2 className="place-card__name">
-          <Link to="#">{offer.title}</Link>
+          <Link to={`/offer/${offer.id}`}>{offer.title}</Link>
         </h2>
         <p className="place-card__type">{offer.type}</p>
       </div>

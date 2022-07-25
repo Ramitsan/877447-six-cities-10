@@ -7,7 +7,7 @@ type FavoritesPageProps = {
   offers: Offer[];
 };
 
-function FavoritesPage({offers} : FavoritesPageProps): JSX.Element {
+export default function FavoritesPage({offers} : FavoritesPageProps): JSX.Element {
   const favoritesOffers = offers.filter((offer) => offer.isFavorite);
 
   return (
@@ -43,7 +43,7 @@ function FavoritesPage({offers} : FavoritesPageProps): JSX.Element {
         <div className="page__favorites-container container">
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
-           <FavoriteCardList offers={favoritesOffers} />
+            <FavoriteCardList favoritesOffers={favoritesOffers} />
           </section>
         </div>
       </main>
@@ -55,4 +55,3 @@ function FavoritesPage({offers} : FavoritesPageProps): JSX.Element {
     </div>
   );
 }
-export default FavoritesPage;

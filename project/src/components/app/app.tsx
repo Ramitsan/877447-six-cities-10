@@ -9,11 +9,10 @@ import PrivateRoute from '../private-route/private-route';
 import { Offer } from '../../types/offer';
 
 type AppScreenProps = {
-  cardCount: number;
   offers: Offer[];
 }
 
-function App({ cardCount, offers }: AppScreenProps): JSX.Element {
+export default function App({ offers }: AppScreenProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
@@ -21,7 +20,6 @@ function App({ cardCount, offers }: AppScreenProps): JSX.Element {
           path={AppRoute.Root}
           element={
             <MainPage
-              cardCount={cardCount}
               offers={offers}
             />
           }
@@ -52,5 +50,3 @@ function App({ cardCount, offers }: AppScreenProps): JSX.Element {
     </BrowserRouter>
   );
 }
-
-export default App;

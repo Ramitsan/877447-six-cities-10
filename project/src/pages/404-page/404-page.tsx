@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-function NotFound(): JSX.Element {
+export default function NotFound(): JSX.Element {
   return (
     <>
       <h1 style={{ textAlign: 'center' }}>
@@ -20,5 +20,3 @@ function NotFound(): JSX.Element {
     </>
   );
 }
-
-export default NotFound;

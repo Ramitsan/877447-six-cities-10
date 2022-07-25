@@ -4,11 +4,10 @@ import CardList from '../../components/card-list/card-list';
 import { Offer } from '../../types/offer';
 
 type MainPageProps = {
-  cardCount: number;
   offers: Offer[];
 }
 
-function MainPage({ cardCount, offers }: MainPageProps): JSX.Element {
+export default function MainPage({ offers }: MainPageProps): JSX.Element {
   return (
     <>
       <Header />
@@ -70,7 +69,7 @@ function MainPage({ cardCount, offers }: MainPageProps): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <CardList cardCount={cardCount} offers={offers}/>
+              <CardList offers={offers}/>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"></section>
@@ -81,5 +80,3 @@ function MainPage({ cardCount, offers }: MainPageProps): JSX.Element {
     </>
   );
 }
-
-export default MainPage;
