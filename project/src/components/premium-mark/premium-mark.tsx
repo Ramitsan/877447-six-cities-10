@@ -5,8 +5,8 @@ interface IPremiumMarkProps {
   placeCard: string
 }
 
-export default function PremiumMark({ offer, placeCard }: IPremiumMarkProps): JSX.Element {
+export default function PremiumMark({ offer, placeCard }: IPremiumMarkProps): JSX.Element | null {
   return (
-    offer.isPremium ? <div className={`${placeCard}__mark`}><span>Premium</span></div> : <></>
+    offer.isPremium ? <div className={`${placeCard}__mark`}><span>Premium</span></div> : null
   );
 }

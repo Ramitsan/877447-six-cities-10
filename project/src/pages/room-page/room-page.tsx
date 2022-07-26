@@ -1,4 +1,4 @@
-import {Link, useParams} from 'react-router-dom';
+import {Link, /*useParams*/} from 'react-router-dom';
 import Logo from '../../components/logo/logo';
 import ReviewForm from '../../components/review-form/review-form';
 

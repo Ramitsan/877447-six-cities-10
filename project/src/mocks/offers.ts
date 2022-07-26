@@ -31,7 +31,7 @@ export const offers: Offer[] = [
     maxAdults: 4,
     previewImage: 'img/apartment-small-03.jpg',
     price: 120,
-    rating: 2,
+    rating: 2.1,
     title: 'Beautiful & luxurious studio at great location',
     type: 'apartment'
   },
@@ -97,9 +97,9 @@ export const offers: Offer[] = [
       zoom: 8
     },
     maxAdults: 2,
-    previewImage: 'img/room-small.jpg',
+    previewImage: 'img/apartment-02.jpg',
     price: 250,
-    rating: 3,
+    rating: 3.5,
     title: 'Beautiful & luxurious cottage at great location',
     type: 'cottage'
   },
@@ -133,7 +133,7 @@ export const offers: Offer[] = [
     maxAdults: 5,
     previewImage: 'img/apartment-small-04.jpg',
     price: 130,
-    rating: 4.5,
+    rating: 4.9,
     title: 'Beautiful & luxurious house at great location',
     type: 'house'
   },

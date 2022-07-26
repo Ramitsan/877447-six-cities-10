@@ -5,7 +5,7 @@ type RaitingStarsProps = {
 export default function RaitingStars({rating}: RaitingStarsProps) : JSX.Element {
   const maxRating = 5;
   const maxPercent = 100;
-  const ratingInPercent = rating * maxPercent / maxRating;
+  const ratingInPercent = Math.round(rating) * maxPercent / maxRating;
   return (
     <div className="place-card__rating rating">
       <div className="place-card__stars rating__stars">
