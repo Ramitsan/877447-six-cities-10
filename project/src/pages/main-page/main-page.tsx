@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom';
 import Header from '../../components/header/header';
 import CardList from '../../components/card-list/card-list';
-import { Offer } from '../../types/offer';
+import {Location, Offer} from '../../types/offer';
+
+import Map from '../../components/map/map';
 
 type MainPageProps = {
   offers: Offer[];
@@ -72,7 +74,7 @@ export default function MainPage({ offers }: MainPageProps): JSX.Element {
               <CardList offers={offers}/>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <Map city={offers[0].city} offers={offers} />
             </div>
           </div>
         </div>
