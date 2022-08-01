@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
 import Header from '../../components/header/header';
 import CardList from '../../components/card-list/card-list';
-import {Location, Offer} from '../../types/offer';
+import {OfferType} from '../../types/offerType';
 
 import Map from '../../components/map/map';
 
 type MainPageProps = {
-  offers: Offer[];
+  offers: OfferType[];
 }
 
 export default function MainPage({ offers }: MainPageProps): JSX.Element {

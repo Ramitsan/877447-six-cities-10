@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
 import { offers } from './mocks/offers';
+import { comments } from './mocks/comments';
 
 // const Setting = {
 //   CARD_COUNT: 5,
@@ -16,6 +17,7 @@ root.render(
     <App
       // cardCount = {Setting.CARD_COUNT}
       offers={offers}
+      comments={comments}
     />
   </React.StrictMode>,
 );

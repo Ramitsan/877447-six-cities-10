@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
 import FavoriteCard from '../favorite-card/favorite-card';
-import { Offer } from '../../types/offer';
+import { OfferType } from '../../types/offerType';
 
 type FavoriteCardListProps = {
-  favoritesOffers: Offer[];
+  favoritesOffers: OfferType[];
 };
 
 export default function FavoriteCardList({ favoritesOffers }: FavoriteCardListProps): JSX.Element {

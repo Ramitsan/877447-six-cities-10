@@ -6,14 +6,16 @@ import LoginPage from '../../pages/login-page/login-page';
 import RoomPage from '../../pages/room-page/room-page';
 import NotFound from '../../pages/404-page/404-page';
 import PrivateRoute from '../private-route/private-route';
-import { Offer } from '../../types/offer';
+import { OfferType } from '../../types/offerType';
+import { CommentType } from '../../types/commentType';
 // import {selectedLocation} from '../../const';
 
 type AppScreenProps = {
-  offers: Offer[];
+  offers: OfferType[];
+  comments: CommentType[];
 }
 
-export default function App({ offers}: AppScreenProps): JSX.Element {
+export default function App({ offers, comments }: AppScreenProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
@@ -22,7 +24,7 @@ export default function App({ offers}: AppScreenProps): JSX.Element {
           element={
             <MainPage
               offers={offers}
-              // selectedLocation={selectedLocation}
+            // selectedLocation={selectedLocation}
             />
           }
         />
@@ -42,7 +44,7 @@ export default function App({ offers}: AppScreenProps): JSX.Element {
         />
         <Route
           path={AppRoute.Room}
-          element={<RoomPage />}
+          element={<RoomPage comments={comments} />}
         />
         <Route
           path="*"

@@ -1,8 +1,14 @@
 import {Link, /*useParams*/} from 'react-router-dom';
 import Logo from '../../components/logo/logo';
 import ReviewForm from '../../components/review-form/review-form';
+import ReviewsList from '../../components/reviews-list/revuews-list';
+import { CommentType } from '../../types/commentType';
 
-export default function RoomPage(): JSX.Element {
+type RoomPageProps = {
+  comments: CommentType[];
+}
+
+export default function RoomPage({comments} : RoomPageProps): JSX.Element {
   // const {id} = useParams();
   return (
     <div className="page">
@@ -153,31 +159,8 @@ export default function RoomPage(): JSX.Element {
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
-                <ul className="reviews__list">
-                  <li className="reviews__item">
-                    <div className="reviews__user user">
-                      <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                        <img className="reviews__avatar user__avatar" src="img/avatar-max.jpg" width="54" height="54" alt="Reviews avatar" />
-                      </div>
-                      <span className="reviews__user-name">
-                        Max
-                      </span>
-                    </div>
-                    <div className="reviews__info">
-                      <div className="reviews__rating rating">
-                        <div className="reviews__stars rating__stars">
-                          <span style={{ width: '80%' }}></span>
-                          <span className="visually-hidden">Rating</span>
-                        </div>
-                      </div>
-                      <p className="reviews__text">
-                        A quiet cozy and picturesque that hides behind Link Link river by the unique lightness of Amsterdam. The building is green and from 18th century.
-                      </p>
-                      <time className="reviews__time" dateTime="2019-04-24">April 2019</time>
-                    </div>
-                  </li>
-                </ul>
+                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
+                <ReviewsList comments={comments}/>
                 <ReviewForm/>
               </section>
             </div>

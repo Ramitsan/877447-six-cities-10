@@ -1,9 +1,9 @@
 import Card from '../card/card';
-import { Offer } from '../../types/offer';
+import { OfferType } from '../../types/offerType';
 import { useState } from 'react';
 
 type CardListProps = {
-  offers: Offer[];
+  offers: OfferType[];
 };
 
 export default function CardList({ offers }: CardListProps): JSX.Element {
