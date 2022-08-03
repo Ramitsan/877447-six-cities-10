@@ -5,15 +5,14 @@ import {Marker} from 'leaflet';
 import {LocationType, CityType, OfferType} from '../../types/offerType';
 import useMap from '../../hooks/useMap';
 import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT} from '../../const';
-// import { offers } from '../../mocks/offers';
 
 type MapProps = {
   city: CityType;
   offers: OfferType[];
+  selectedLocation: LocationType | undefined;
 };
 
-
-export default function Map({city, offers}: MapProps): JSX.Element {
+export default function Map({ city, offers, selectedLocation}: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
@@ -37,12 +36,16 @@ export default function Map({city, offers}: MapProps): JSX.Element {
           lng: offer.location.longitude
         });
 
-        // marker.setIcon(
-        //   selectedLocation !== undefined ? currentCustomIcon : defaultCustomIcon
-        // ).addTo(map);
+        marker.setIcon(
+          selectedLocation !== undefined &&
+          offer.location.latitude === selectedLocation?.latitude &&
+          offer.location.longitude === selectedLocation?.longitude
+            ? currentCustomIcon
+            : defaultCustomIcon
+        ).addTo(map);
       });
     }
-  }, [map, offers]);
+  }, [map, offers, selectedLocation]);
 
   return (
     <section className="cities__map map"

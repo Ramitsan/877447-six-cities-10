@@ -8,7 +8,6 @@ import NotFound from '../../pages/404-page/404-page';
 import PrivateRoute from '../private-route/private-route';
 import { OfferType } from '../../types/offerType';
 import { CommentType } from '../../types/commentType';
-// import {selectedLocation} from '../../const';
 
 type AppScreenProps = {
   offers: OfferType[];
@@ -24,7 +23,6 @@ export default function App({ offers, comments }: AppScreenProps): JSX.Element {
           element={
             <MainPage
               offers={offers}
-            // selectedLocation={selectedLocation}
             />
           }
         />

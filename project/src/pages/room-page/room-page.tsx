@@ -1,7 +1,6 @@
 import {Link, /*useParams*/} from 'react-router-dom';
 import Logo from '../../components/logo/logo';
-import ReviewForm from '../../components/review-form/review-form';
-import ReviewsList from '../../components/reviews-list/revuews-list';
+import ReviewsSection from '../../components/reviews-section/reviews-section';
 import { CommentType } from '../../types/commentType';
 
 type RoomPageProps = {
@@ -158,11 +157,7 @@ export default function RoomPage({comments} : RoomPageProps): JSX.Element {
                   </p>
                 </div>
               </div>
-              <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
-                <ReviewsList comments={comments}/>
-                <ReviewForm/>
-              </section>
+              <ReviewsSection comments={comments} />
             </div>
           </div>
           <section className="property__map map"></section>
