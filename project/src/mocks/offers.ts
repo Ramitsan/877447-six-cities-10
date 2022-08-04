@@ -1,18 +1,18 @@
-import { Offer } from '../types/offer';
+import { OfferType } from '../types/offerType';
 
-export const offers: Offer[] = [
+export const offers: OfferType[] = [
   {
     bedrooms: 3,
     city: {
       location: {
         latitude: 52.370216,
         longitude: 4.895168,
-        zoom: 10,
+        zoom: 10
       },
       name: 'Amsterdam',
     },
     description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
-    goods: ['Heating', 'wi-fi', 'kitchen'],
+    goods: ['Heating', 'wi-fi', 'kitchen', 'Towels', 'Baby seat'],
     host: {
       avatarUrl: 'img/avatar-angelina.jpg',
       id: 3,
@@ -24,8 +24,8 @@ export const offers: Offer[] = [
     isFavorite: true,
     isPremium: true,
     location: {
-      latitude: 52.35514938496378,
-      longitude: 4.673877537499948,
+      latitude: 52.3909553943508,
+      longitude: 4.85309666406198,
       zoom: 8
     },
     maxAdults: 4,
@@ -39,14 +39,14 @@ export const offers: Offer[] = [
     bedrooms: 2,
     city: {
       location: {
-        latitude: 35.370216,
-        longitude: 5.895168,
-        zoom: 10,
+        latitude: 52.370216,
+        longitude: 4.895168,
+        zoom: 10
       },
-      name: 'Paris',
+      name: 'Amsterdam',
     },
     description: 'A quiet cozy and picturesque that hides behind a river by the unique lightness of Paris.',
-    goods: ['Heating', 'conditioner', 'wi-fi'],
+    goods: ['Heating', 'Fridge', 'wi-fi', 'Washing machine'],
     host: {
       avatarUrl: 'img/avatar-max.jpg',
       id: 5,
@@ -58,8 +58,8 @@ export const offers: Offer[] = [
     isFavorite: true,
     isPremium: true,
     location: {
-      latitude: 35.35514938496378,
-      longitude: 5.673877537499948,
+      latitude: 52.369553943508,
+      longitude: 4.85309666406198,
       zoom: 8
     },
     maxAdults: 2,
@@ -73,14 +73,14 @@ export const offers: Offer[] = [
     bedrooms: 3,
     city: {
       location: {
-        latitude: 58.370216,
-        longitude: 8.895168,
-        zoom: 10,
+        latitude: 52.370216,
+        longitude: 4.895168,
+        zoom: 10
       },
-      name: 'Hamburg',
+      name: 'Amsterdam',
     },
     description: 'A quiet cozy and picturesque that hides behind a river by the unique lightness of Hamburg.',
-    goods: ['Heating', 'conditioner', 'elevator'],
+    goods: ['Heating', 'Washing machine', 'Kitchen', 'Dishwasher'],
     host: {
       avatarUrl: 'img/avatar-angelina.jpg',
       id: 4,
@@ -92,8 +92,8 @@ export const offers: Offer[] = [
     isFavorite: true,
     isPremium: false,
     location: {
-      latitude: 58.35514938496378,
-      longitude: 8.673877537499948,
+      latitude: 52.3909553943508,
+      longitude: 4.929309666406198,
       zoom: 8
     },
     maxAdults: 2,
@@ -107,14 +107,14 @@ export const offers: Offer[] = [
     bedrooms: 5,
     city: {
       location: {
-        latitude: 65.370216,
-        longitude: 3.895168,
-        zoom: 10,
+        latitude: 52.370216,
+        longitude: 4.895168,
+        zoom: 10
       },
-      name: 'Brussels',
+      name: 'Amsterdam',
     },
     description: 'A quiet cozy and picturesque that hides behind a river by the unique lightness of Brussels.',
-    goods: ['Heating', 'conditioner', 'wi-fi'],
+    goods: ['Heating', 'Fridge', 'wi-fi'],
     host: {
       avatarUrl: 'img/avatar-max.jpg',
       id: 8,
@@ -126,8 +126,8 @@ export const offers: Offer[] = [
     isFavorite: false,
     isPremium: true,
     location: {
-      latitude: 65.35514938496378,
-      longitude: 3.673877537499948,
+      latitude: 52.3809553943508,
+      longitude: 4.939309666406198,
       zoom: 8
     },
     maxAdults: 5,

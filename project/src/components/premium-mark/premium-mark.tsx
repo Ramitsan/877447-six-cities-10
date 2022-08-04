@@ -1,7 +1,7 @@
-import { Offer } from '../../types/offer';
+import { OfferType } from '../../types/offerType';
 
 interface IPremiumMarkProps {
-  offer: Offer,
+  offer: OfferType,
   placeCard: string
 }
 

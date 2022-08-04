@@ -1,13 +1,26 @@
 import { Link } from 'react-router-dom';
 import Header from '../../components/header/header';
 import CardList from '../../components/card-list/card-list';
-import { Offer } from '../../types/offer';
+import { LocationType, OfferType } from '../../types/offerType';
+import Map from '../../components/map/map';
+import { useState } from 'react';
 
 type MainPageProps = {
-  offers: Offer[];
+  offers: OfferType[];
 }
 
 export default function MainPage({ offers }: MainPageProps): JSX.Element {
+  const [selectedLocation, setSelectedLocation] = useState<LocationType | undefined>(undefined);
+
+  const handleOfferCardHover = (hoveredOffer: number | null) => {
+    if (hoveredOffer === null) {
+      setSelectedLocation(undefined);
+    } else {
+      const currentOffer = offers.find((offer) => offer.id === hoveredOffer);
+      setSelectedLocation(currentOffer?.location);
+    }
+  };
+
   return (
     <>
       <Header />
@@ -69,10 +82,13 @@ export default function MainPage({ offers }: MainPageProps): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <CardList offers={offers}/>
+              <CardList
+                offers={offers}
+                onOfferCardHover={handleOfferCardHover}
+              />
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <Map city={offers[0].city} offers={offers} selectedLocation={selectedLocation} />
             </div>
           </div>
         </div>

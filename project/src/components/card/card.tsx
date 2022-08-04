@@ -1,12 +1,12 @@
 import {Link} from 'react-router-dom';
-import { Offer } from '../../types/offer';
+import { OfferType } from '../../types/offerType';
 import {isFavorite} from '../../utils';
 import PremiumMark from '../../components/premium-mark/premium-mark';
 import RaitingStars from '../raiting-stars/raiting-stars';
 import { MouseEventHandler } from 'react';
 
 type CardProps = {
-  offer: Offer;
+  offer: OfferType;
   onMouseOver?: MouseEventHandler<HTMLElement> | undefined;
   onMouseLeave?: MouseEventHandler<HTMLElement> | undefined;
 }
