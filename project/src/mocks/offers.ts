@@ -137,4 +137,38 @@ export const offers: OfferType[] = [
     title: 'Beautiful & luxurious house at great location',
     type: 'house'
   },
+  {
+    bedrooms: 5,
+    city: {
+      location: {
+        latitude: 52.371807,
+        longitude: 4.896029,
+        zoom: 10
+      },
+      name: 'Paris',
+    },
+    description: 'A quiet cozy and picturesque that hides behind a river by the unique lightness of Brussels.',
+    goods: ['Heating', 'Fridge', 'wi-fi'],
+    host: {
+      avatarUrl: 'img/avatar-max.jpg',
+      id: 8,
+      isPro: true,
+      name: 'Max',
+    },
+    id: 4,
+    images: ['img/apartment-01.jpg', 'img/apartment-03.jpg'],
+    isFavorite: false,
+    isPremium: true,
+    location: {
+      latitude: 52.3809553943508,
+      longitude: 4.939309666406198,
+      zoom: 8
+    },
+    maxAdults: 5,
+    previewImage: 'img/apartment-small-04.jpg',
+    price: 130,
+    rating: 4.9,
+    title: 'Beautiful & luxurious house at great location',
+    type: 'house'
+  },
 ];

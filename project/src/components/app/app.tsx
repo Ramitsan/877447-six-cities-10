@@ -1,20 +1,21 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
+import { OfferType } from '../../types/offerType';
+import { CommentType } from '../../types/commentType';
 import MainPage from '../../pages/main-page/main-page';
 import FavoritesPage from '../../pages/favorites-page/favorites-page';
 import LoginPage from '../../pages/login-page/login-page';
 import RoomPage from '../../pages/room-page/room-page';
 import NotFound from '../../pages/404-page/404-page';
 import PrivateRoute from '../private-route/private-route';
-import { OfferType } from '../../types/offerType';
-import { CommentType } from '../../types/commentType';
 
 type AppScreenProps = {
   offers: OfferType[];
   comments: CommentType[];
+  cities: string[];
 }
 
-export default function App({ offers, comments }: AppScreenProps): JSX.Element {
+export default function App({ offers, comments, cities }: AppScreenProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
@@ -23,6 +24,7 @@ export default function App({ offers, comments }: AppScreenProps): JSX.Element {
           element={
             <MainPage
               offers={offers}
+              cities={cities}
             />
           }
         />

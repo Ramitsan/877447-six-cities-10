@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { DEFAULT_CITY } from '../const';
 import { offers } from '../mocks/offers';
-import { changeCity, loadOffers } from './action';
+import { changeCity, loadOffers } from './actions';
 
 // Объект начального состояния:
 // город (используется для отбора списка предложений в определённом городе)
@@ -11,7 +11,7 @@ const initialState = {
   cityOffers: offers
 };
 
-//Функцию-редьюсер. Она принимает в качестве параметров текущий state и действие (action).
+//Функция-редьюсер. Она принимает в качестве параметров текущий state и действие (action).
 // Результатом выполнения редьюсера станет новое состояние
 export const reducer = createReducer(initialState, (builder) => {
   builder

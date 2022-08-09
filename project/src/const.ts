@@ -15,4 +15,6 @@ const URL_MARKER_DEFAULT = '../img/pin.svg';
 const URL_MARKER_CURRENT = '../img/pin-active.svg';
 const DEFAULT_CITY = 'Paris';
 
-export {AppRoute, AuthorizationStatus, URL_MARKER_DEFAULT, URL_MARKER_CURRENT, DEFAULT_CITY};
+const cities = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
+
+export {AppRoute, AuthorizationStatus, URL_MARKER_DEFAULT, URL_MARKER_CURRENT, DEFAULT_CITY, cities};
