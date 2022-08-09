@@ -1,14 +1,24 @@
-import {Link, /*useParams*/} from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Logo from '../../components/logo/logo';
 import ReviewsSection from '../../components/reviews-section/reviews-section';
 import { CommentType } from '../../types/commentType';
+import { offers } from '../../mocks/offers';
+import ImagesGallery from '../../components/images-gallery/images-gallery';
 
 type RoomPageProps = {
   comments: CommentType[];
 }
 
-export default function RoomPage({comments} : RoomPageProps): JSX.Element {
-  // const {id} = useParams();
+export default function RoomPage({ comments }: RoomPageProps): JSX.Element {
+  const { id } = useParams();
+
+  const offer = offers.filter((item) => item.id === Number(id))[0];
+  const {bedrooms, description, host, maxAdults, price, rating, title, type} = offer;
+  const {avatarUrl, isPro, name} = host;
+
+  const commentsToOffer = comments.filter((comment) => comment.idOffer === Number(id));
+  const userStatus = isPro ? 'Pro' : '';
+
   return (
     <div className="page">
       <header className="header">
@@ -41,26 +51,7 @@ export default function RoomPage({comments} : RoomPageProps): JSX.Element {
       <main className="page__main page__main--property">
         <section className="property">
           <div className="property__gallery-container container">
-            <div className="property__gallery">
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/room.jpg" alt="Photo studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-01.jpg" alt="Photo studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-02.jpg" alt="Photo studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-03.jpg" alt="Photo studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/studio-01.jpg" alt="Photo studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-01.jpg" alt="Photo studio" />
-              </div>
-            </div>
+            <ImagesGallery />
           </div>
           <div className="property__container container">
             <div className="property__wrapper">
@@ -69,7 +60,7 @@ export default function RoomPage({comments} : RoomPageProps): JSX.Element {
               </div>
               <div className="property__name-wrapper">
                 <h1 className="property__name">
-                  Beautiful &amp; luxurious studio at great location
+                  {title}
                 </h1>
                 <button className="property__bookmark-button button" type="button">
                   <svg className="property__bookmark-icon" width="31" height="33">
@@ -83,21 +74,21 @@ export default function RoomPage({comments} : RoomPageProps): JSX.Element {
                   <span style={{ width: '80%' }}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="property__rating-value rating__value">4.8</span>
+                <span className="property__rating-value rating__value">{rating}</span>
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  Apartment
+                  {type}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
-                  3 Bedrooms
+                  {bedrooms} Bedrooms
                 </li>
                 <li className="property__feature property__feature--adults">
-                  Max 4 adults
+                  Max {maxAdults} adults
                 </li>
               </ul>
               <div className="property__price">
-                <b className="property__price-value">&euro;120</b>
+                <b className="property__price-value">&euro;{price}</b>
                 <span className="property__price-text">&nbsp;night</span>
               </div>
               <div className="property__inside">
@@ -139,25 +130,25 @@ export default function RoomPage({comments} : RoomPageProps): JSX.Element {
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
                   <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="property__avatar user__avatar" src="img/avatar-angelina.jpg" width="74" height="74" alt="Host avatar" />
+                    <img className="property__avatar user__avatar" src={avatarUrl} width="74" height="74" alt="Host avatar" />
                   </div>
                   <span className="property__user-name">
-                    Angelina
+                    {name}
                   </span>
                   <span className="property__user-status">
-                    Pro
+                    {userStatus}
                   </span>
                 </div>
                 <div className="property__description">
                   <p className="property__text">
-                    A quiet cozy and picturesque that hides behind Link Link river by the unique lightness of Amsterdam. The building is green and from 18th century.
+                    {description}
                   </p>
                   <p className="property__text">
                     An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful.
                   </p>
                 </div>
               </div>
-              <ReviewsSection comments={comments} />
+              <ReviewsSection comments={commentsToOffer} />
             </div>
           </div>
           <section className="property__map map"></section>

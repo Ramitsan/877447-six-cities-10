@@ -32,7 +32,7 @@ export default function useMap(mapRef: MutableRefObject<HTMLElement | null>, cit
       //   instance.remove();
       // };
     }
-  }, [map, mapRef, city]);
+  }, [mapRef, city]);
 
   return map;
 }
