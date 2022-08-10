@@ -1,9 +1,11 @@
+import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Logo from '../../components/logo/logo';
 import ReviewsSection from '../../components/reviews-section/reviews-section';
 import { CommentType } from '../../types/commentType';
 import { offers } from '../../mocks/offers';
 import ImagesGallery from '../../components/images-gallery/images-gallery';
+import InsideList from '../../components/inside-list/inside-list';
 
 type RoomPageProps = {
   comments: CommentType[];
@@ -13,11 +15,16 @@ export default function RoomPage({ comments }: RoomPageProps): JSX.Element {
   const { id } = useParams();
 
   const offer = offers.filter((item) => item.id === Number(id))[0];
-  const {bedrooms, description, host, maxAdults, price, rating, title, type} = offer;
-  const {avatarUrl, isPro, name} = host;
+  const [offerIsFavorite, setOfferIsFavorite] = useState(offer?.isFavorite || false);
+
+  const { bedrooms, description, host, isPremium, maxAdults, price, rating, title, type } = offer;
+  const { avatarUrl, isPro, name } = host;
 
   const commentsToOffer = comments.filter((comment) => comment.idOffer === Number(id));
   const userStatus = isPro ? 'Pro' : '';
+  const isPremiumOffer = isPremium ? <div className="property__mark"><span>Premium</span></div> : null;
+  const isFavoriteBtnClassName = offerIsFavorite ? 'property__bookmark-button button property__bookmark-button--active' : 'property__bookmark-button button';
+  const isFavoriteSvgClassName = offerIsFavorite ? 'property__bookmark-icon place-card__bookmark-icon' : 'property__bookmark-icon';
 
   return (
     <div className="page">
@@ -55,15 +62,13 @@ export default function RoomPage({ comments }: RoomPageProps): JSX.Element {
           </div>
           <div className="property__container container">
             <div className="property__wrapper">
-              <div className="property__mark">
-                <span>Premium</span>
-              </div>
+              {isPremiumOffer}
               <div className="property__name-wrapper">
                 <h1 className="property__name">
                   {title}
                 </h1>
-                <button className="property__bookmark-button button" type="button">
-                  <svg className="property__bookmark-icon" width="31" height="33">
+                <button className={isFavoriteBtnClassName} type="button" onClick={() => { setOfferIsFavorite(!offerIsFavorite); }}>
+                  <svg className={isFavoriteSvgClassName} width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
                   <span className="visually-hidden">To bookmarks</span>
@@ -93,38 +98,7 @@ export default function RoomPage({ comments }: RoomPageProps): JSX.Element {
               </div>
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
-                <ul className="property__inside-list">
-                  <li className="property__inside-item">
-                    Wi-Fi
-                  </li>
-                  <li className="property__inside-item">
-                    Washing machine
-                  </li>
-                  <li className="property__inside-item">
-                    Towels
-                  </li>
-                  <li className="property__inside-item">
-                    Heating
-                  </li>
-                  <li className="property__inside-item">
-                    Coffee machine
-                  </li>
-                  <li className="property__inside-item">
-                    Baby seat
-                  </li>
-                  <li className="property__inside-item">
-                    Kitchen
-                  </li>
-                  <li className="property__inside-item">
-                    Dishwasher
-                  </li>
-                  <li className="property__inside-item">
-                    Cabel TV
-                  </li>
-                  <li className="property__inside-item">
-                    Fridge
-                  </li>
-                </ul>
+                <InsideList />
               </div>
               <div className="property__host">
                 <h2 className="property__host-title">Meet the host</h2>

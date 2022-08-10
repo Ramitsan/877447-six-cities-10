@@ -12,7 +12,7 @@ export const offers: OfferType[] = [
       name: 'Amsterdam',
     },
     description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
-    goods: ['Heating', 'wi-fi', 'kitchen', 'Towels', 'Baby seat'],
+    goods: ['Heating', 'wi-fi', 'kitchen', 'Dishwasher', 'Towels', 'Baby seat', 'Coffee machine'],
     host: {
       avatarUrl: 'img/avatar-angelina.jpg',
       id: 3,
@@ -56,7 +56,7 @@ export const offers: OfferType[] = [
       name: 'Amsterdam',
     },
     description: 'A quiet cozy and picturesque that hides behind a river by the unique lightness of Paris.',
-    goods: ['Heating', 'Fridge', 'wi-fi', 'Washing machine'],
+    goods: ['Heating', 'Fridge', 'Dishwasher', 'wi-fi', 'Washing machine', 'Baby seat', 'Coffee machine'],
     host: {
       avatarUrl: 'img/avatar-max.jpg',
       id: 5,
@@ -100,7 +100,7 @@ export const offers: OfferType[] = [
       name: 'Amsterdam',
     },
     description: 'A quiet cozy and picturesque that hides behind a river by the unique lightness of Hamburg.',
-    goods: ['Heating', 'Washing machine', 'Kitchen', 'Dishwasher'],
+    goods: ['Heating', 'Washing machine', 'Kitchen', 'Dishwasher', 'Baby seat', 'Coffee machine'],
     host: {
       avatarUrl: 'img/avatar-angelina.jpg',
       id: 4,
@@ -144,7 +144,7 @@ export const offers: OfferType[] = [
       name: 'Amsterdam',
     },
     description: 'A quiet cozy and picturesque that hides behind a river by the unique lightness of Brussels.',
-    goods: ['Heating', 'Fridge', 'wi-fi'],
+    goods: ['Heating', 'Cabel TV', 'Fridge', 'wi-fi', 'Baby seat', 'Coffee machine'],
     host: {
       avatarUrl: 'img/avatar-max.jpg',
       id: 8,
@@ -188,14 +188,14 @@ export const offers: OfferType[] = [
       name: 'Paris',
     },
     description: 'A quiet cozy and picturesque that hides behind a river by the unique lightness of Brussels.',
-    goods: ['Heating', 'Fridge', 'wi-fi'],
+    goods: ['Heating', 'Fridge', 'wi-fi', 'Cabel TV', 'Baby seat', 'Coffee machine'],
     host: {
       avatarUrl: 'img/avatar-max.jpg',
       id: 8,
       isPro: true,
       name: 'Max',
     },
-    id: 4,
+    id: 5,
     images: [
       'img/apartment-02.jpg',
       'img/apartment-01.jpg',
