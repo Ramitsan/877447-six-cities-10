@@ -8,10 +8,13 @@ import Map from '../../components/map/map';
 type MainPageProps = {
   offers: OfferType[];
   cities: string[];
+  city: string;
 }
 
-export default function MainPage({ offers, cities }: MainPageProps): JSX.Element {
+export default function MainPage({ offers, cities, city }: MainPageProps): JSX.Element {
   const [selectedLocation, setSelectedLocation] = useState<LocationType | undefined>(undefined);
+
+  const locationOffers = offers.filter((offer) => offer.city.name === city);
 
   const handleOfferCardHover = (hoveredOffer: number | null) => {
     if (hoveredOffer === null) {
@@ -29,14 +32,14 @@ export default function MainPage({ offers, cities }: MainPageProps): JSX.Element
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
-            <LocationList cities={cities}/>
+            <LocationList cities={cities} />
           </section>
         </div>
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">312 places to stay in Amsterdam</b>
+              <b className="places__found">{locationOffers.length} places to stay in Amsterdam</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -53,12 +56,16 @@ export default function MainPage({ offers, cities }: MainPageProps): JSX.Element
                 </ul>
               </form>
               <CardList
-                offers={offers}
+                offers={locationOffers}
                 onOfferCardHover={handleOfferCardHover}
               />
             </section>
             <div className="cities__right-section">
-              <Map city={offers[0].city} offers={offers} selectedLocation={selectedLocation} />
+              <Map
+                city={offers[0].city}
+                offers={offers}
+                selectedLocation={selectedLocation}
+              />
             </div>
           </div>
         </div>

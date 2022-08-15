@@ -1,6 +1,3 @@
-import { useParams } from 'react-router-dom';
-import { offers } from '../../mocks/offers';
-
 type InsideItemProps = {
   good: string;
 }
@@ -13,10 +10,11 @@ function InsideItem({ good }: InsideItemProps): JSX.Element {
   );
 }
 
-export default function InsideList(): JSX.Element {
-  const { id } = useParams();
-  const offer = offers.filter((item) => item.id === Number(id))[0];
-  const { goods } = offer;
+type InsideListProps = {
+  goods: string[];
+}
+
+export default function InsideList({goods} : InsideListProps): JSX.Element {
   return (
     <ul className="property__inside-list">
       {goods.map((good) => (

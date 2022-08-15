@@ -8,7 +8,7 @@ import { changeCity, loadOffers } from './actions';
 // и список предложений по аренде.
 const initialState = {
   city: DEFAULT_CITY,
-  cityOffers: offers
+  offers: offers
 };
 
 //Функция-редьюсер. Она принимает в качестве параметров текущий state и действие (action).
@@ -20,7 +20,7 @@ export const reducer = createReducer(initialState, (builder) => {
       state.city = city;
     })
     .addCase(loadOffers, (state, action) => {
-      const { cityOffers } = action.payload;
-      state.cityOffers = cityOffers;
+      const { offers : offersCities } = action.payload;
+      state.offers = offersCities;
     });
 });

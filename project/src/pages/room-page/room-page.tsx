@@ -3,28 +3,34 @@ import { Link, useParams } from 'react-router-dom';
 import Logo from '../../components/logo/logo';
 import ReviewsSection from '../../components/reviews-section/reviews-section';
 import { CommentType } from '../../types/commentType';
-import { offers } from '../../mocks/offers';
 import ImagesGallery from '../../components/images-gallery/images-gallery';
 import InsideList from '../../components/inside-list/inside-list';
+import { useAppSelector } from '../../hooks';
 
 type RoomPageProps = {
   comments: CommentType[];
 }
 
 export default function RoomPage({ comments }: RoomPageProps): JSX.Element {
-  const { id } = useParams();
 
-  const offer = offers.filter((item) => item.id === Number(id))[0];
+  const { id } = useParams();
+  const offer = useAppSelector((state) => state.offers.find((item) => item.id === Number(id)));
   const [offerIsFavorite, setOfferIsFavorite] = useState(offer?.isFavorite || false);
 
-  const { bedrooms, description, host, isPremium, maxAdults, price, rating, title, type } = offer;
+  if (!offer) {
+    return (
+      <div className="page">Предложений не найдено</div>
+    );
+  }
+
+  const { bedrooms, description, goods, host, isPremium, maxAdults, price, rating, title, type, images } = offer;
   const { avatarUrl, isPro, name } = host;
 
   const commentsToOffer = comments.filter((comment) => comment.idOffer === Number(id));
   const userStatus = isPro ? 'Pro' : '';
   const isPremiumOffer = isPremium ? <div className="property__mark"><span>Premium</span></div> : null;
   const isFavoriteBtnClassName = offerIsFavorite ? 'property__bookmark-button button property__bookmark-button--active' : 'property__bookmark-button button';
-  const isFavoriteSvgClassName = offerIsFavorite ? 'property__bookmark-icon place-card__bookmark-icon' : 'property__bookmark-icon';
+  const isFavoriteSvgClassName = offerIsFavorite ? 'place-card__bookmark-icon' : 'property__bookmark-icon';
 
   return (
     <div className="page">
@@ -58,7 +64,7 @@ export default function RoomPage({ comments }: RoomPageProps): JSX.Element {
       <main className="page__main page__main--property">
         <section className="property">
           <div className="property__gallery-container container">
-            <ImagesGallery />
+            <ImagesGallery images={images} type={type}/>
           </div>
           <div className="property__container container">
             <div className="property__wrapper">
@@ -98,7 +104,7 @@ export default function RoomPage({ comments }: RoomPageProps): JSX.Element {
               </div>
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
-                <InsideList />
+                <InsideList goods={goods}/>
               </div>
               <div className="property__host">
                 <h2 className="property__host-title">Meet the host</h2>

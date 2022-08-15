@@ -6,8 +6,7 @@ import { State, AppDispatch } from '../types/stateType';
 
 // useDispatch - хук, возвращающий dispatch метод из редакса, с помощью которого можно диспатчить экшены(отправлять).
 // useSelector - хук, принимающий на вход селектор - метод, который принимает redux state и возвращает из него необходимые данные.
-// TypedUseSelectorHook - интерфейс, который используется для улучшенной типизации. Наш useTypedSelector равен useSelector.
-
+// TypedUseSelectorHook - интерфейс, который используется для улучшенной типизации.
 // модификация оригинального useSelector'а под наше хранилище
 // теперь, когда нам нужно будет что-то отправить в стор, диспатчнуть или извлечь из него,
 // мы будем использовать обертки useAppDispatch и useAppSelector, а не useDispatch и useSelector.
