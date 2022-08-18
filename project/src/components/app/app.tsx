@@ -1,20 +1,21 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
+import { CommentType } from '../../types/commentType';
 import MainPage from '../../pages/main-page/main-page';
 import FavoritesPage from '../../pages/favorites-page/favorites-page';
 import LoginPage from '../../pages/login-page/login-page';
 import RoomPage from '../../pages/room-page/room-page';
 import NotFound from '../../pages/404-page/404-page';
 import PrivateRoute from '../private-route/private-route';
-import { OfferType } from '../../types/offerType';
-import { CommentType } from '../../types/commentType';
+import { useAppSelector } from '../../hooks/index';
 
 type AppScreenProps = {
-  offers: OfferType[];
   comments: CommentType[];
+  cities: string[];
 }
 
-export default function App({ offers, comments }: AppScreenProps): JSX.Element {
+export default function App({ comments, cities }: AppScreenProps): JSX.Element {
+  const { offers, city } = useAppSelector((state) => state);
   return (
     <BrowserRouter>
       <Routes>
@@ -22,7 +23,9 @@ export default function App({ offers, comments }: AppScreenProps): JSX.Element {
           path={AppRoute.Root}
           element={
             <MainPage
+              city={city}
               offers={offers}
+              cities={cities}
             />
           }
         />

@@ -12,13 +12,9 @@ const enum AuthorizationStatus {
 }
 
 const URL_MARKER_DEFAULT = '../img/pin.svg';
-
 const URL_MARKER_CURRENT = '../img/pin-active.svg';
+const DEFAULT_CITY = 'Paris';
 
-// const selectedLocation = {
-//   latitude: 52.3909553943508,
-//   longitude: 4.85309666406198,
-//   zoom: 10
-// };
+const cities = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
-export {AppRoute, AuthorizationStatus, URL_MARKER_DEFAULT, URL_MARKER_CURRENT};
+export {AppRoute, AuthorizationStatus, URL_MARKER_DEFAULT, URL_MARKER_CURRENT, DEFAULT_CITY, cities};

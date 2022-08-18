@@ -1,14 +1,37 @@
-import {Link, /*useParams*/} from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import Logo from '../../components/logo/logo';
 import ReviewsSection from '../../components/reviews-section/reviews-section';
 import { CommentType } from '../../types/commentType';
+import ImagesGallery from '../../components/images-gallery/images-gallery';
+import InsideList from '../../components/inside-list/inside-list';
+import { useAppSelector } from '../../hooks';
 
 type RoomPageProps = {
   comments: CommentType[];
 }
 
-export default function RoomPage({comments} : RoomPageProps): JSX.Element {
-  // const {id} = useParams();
+export default function RoomPage({ comments }: RoomPageProps): JSX.Element {
+
+  const { id } = useParams();
+  const offer = useAppSelector((state) => state.offers.find((item) => item.id === Number(id)));
+  const [offerIsFavorite, setOfferIsFavorite] = useState(offer?.isFavorite || false);
+
+  if (!offer) {
+    return (
+      <div className="page">Предложений не найдено</div>
+    );
+  }
+
+  const { bedrooms, description, goods, host, isPremium, maxAdults, price, rating, title, type, images } = offer;
+  const { avatarUrl, isPro, name } = host;
+
+  const commentsToOffer = comments.filter((comment) => comment.idOffer === Number(id));
+  const userStatus = isPro ? 'Pro' : '';
+  const isPremiumOffer = isPremium ? <div className="property__mark"><span>Premium</span></div> : null;
+  const isFavoriteBtnClassName = offerIsFavorite ? 'property__bookmark-button button property__bookmark-button--active' : 'property__bookmark-button button';
+  const isFavoriteSvgClassName = offerIsFavorite ? 'place-card__bookmark-icon' : 'property__bookmark-icon';
+
   return (
     <div className="page">
       <header className="header">
@@ -41,38 +64,17 @@ export default function RoomPage({comments} : RoomPageProps): JSX.Element {
       <main className="page__main page__main--property">
         <section className="property">
           <div className="property__gallery-container container">
-            <div className="property__gallery">
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/room.jpg" alt="Photo studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-01.jpg" alt="Photo studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-02.jpg" alt="Photo studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-03.jpg" alt="Photo studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/studio-01.jpg" alt="Photo studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-01.jpg" alt="Photo studio" />
-              </div>
-            </div>
+            <ImagesGallery images={images} type={type}/>
           </div>
           <div className="property__container container">
             <div className="property__wrapper">
-              <div className="property__mark">
-                <span>Premium</span>
-              </div>
+              {isPremiumOffer}
               <div className="property__name-wrapper">
                 <h1 className="property__name">
-                  Beautiful &amp; luxurious studio at great location
+                  {title}
                 </h1>
-                <button className="property__bookmark-button button" type="button">
-                  <svg className="property__bookmark-icon" width="31" height="33">
+                <button className={isFavoriteBtnClassName} type="button" onClick={() => { setOfferIsFavorite(!offerIsFavorite); }}>
+                  <svg className={isFavoriteSvgClassName} width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
                   <span className="visually-hidden">To bookmarks</span>
@@ -83,81 +85,50 @@ export default function RoomPage({comments} : RoomPageProps): JSX.Element {
                   <span style={{ width: '80%' }}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="property__rating-value rating__value">4.8</span>
+                <span className="property__rating-value rating__value">{rating}</span>
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  Apartment
+                  {type}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
-                  3 Bedrooms
+                  {bedrooms} Bedrooms
                 </li>
                 <li className="property__feature property__feature--adults">
-                  Max 4 adults
+                  Max {maxAdults} adults
                 </li>
               </ul>
               <div className="property__price">
-                <b className="property__price-value">&euro;120</b>
+                <b className="property__price-value">&euro;{price}</b>
                 <span className="property__price-text">&nbsp;night</span>
               </div>
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
-                <ul className="property__inside-list">
-                  <li className="property__inside-item">
-                    Wi-Fi
-                  </li>
-                  <li className="property__inside-item">
-                    Washing machine
-                  </li>
-                  <li className="property__inside-item">
-                    Towels
-                  </li>
-                  <li className="property__inside-item">
-                    Heating
-                  </li>
-                  <li className="property__inside-item">
-                    Coffee machine
-                  </li>
-                  <li className="property__inside-item">
-                    Baby seat
-                  </li>
-                  <li className="property__inside-item">
-                    Kitchen
-                  </li>
-                  <li className="property__inside-item">
-                    Dishwasher
-                  </li>
-                  <li className="property__inside-item">
-                    Cabel TV
-                  </li>
-                  <li className="property__inside-item">
-                    Fridge
-                  </li>
-                </ul>
+                <InsideList goods={goods}/>
               </div>
               <div className="property__host">
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
                   <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="property__avatar user__avatar" src="img/avatar-angelina.jpg" width="74" height="74" alt="Host avatar" />
+                    <img className="property__avatar user__avatar" src={avatarUrl} width="74" height="74" alt="Host avatar" />
                   </div>
                   <span className="property__user-name">
-                    Angelina
+                    {name}
                   </span>
                   <span className="property__user-status">
-                    Pro
+                    {userStatus}
                   </span>
                 </div>
                 <div className="property__description">
                   <p className="property__text">
-                    A quiet cozy and picturesque that hides behind Link Link river by the unique lightness of Amsterdam. The building is green and from 18th century.
+                    {description}
                   </p>
                   <p className="property__text">
                     An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful.
                   </p>
                 </div>
               </div>
-              <ReviewsSection comments={comments} />
+              <ReviewsSection comments={commentsToOffer} />
             </div>
           </div>
           <section className="property__map map"></section>
