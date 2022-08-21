@@ -14,8 +14,9 @@ type AppScreenProps = {
   cities: string[];
 }
 
-export default function App({ comments, cities }: AppScreenProps): JSX.Element {
+export default function App({ comments, cities, }: AppScreenProps): JSX.Element {
   const { offers, city } = useAppSelector((state) => state);
+
   return (
     <BrowserRouter>
       <Routes>

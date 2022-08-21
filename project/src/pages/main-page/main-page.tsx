@@ -4,6 +4,7 @@ import Header from '../../components/header/header';
 import LocationList from '../../components/location-list/location-list';
 import CardList from '../../components/card-list/card-list';
 import Map from '../../components/map/map';
+import { DEFAULT_CITY_DATA } from '../../const';
 
 type MainPageProps = {
   offers: OfferType[];
@@ -62,7 +63,7 @@ export default function MainPage({ offers, cities, city }: MainPageProps): JSX.E
             </section>
             <div className="cities__right-section">
               <Map
-                city={offers[0].city}
+                city={offers[0] ? offers[0].city : DEFAULT_CITY_DATA}
                 offers={offers}
                 selectedLocation={selectedLocation}
               />

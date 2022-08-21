@@ -1,14 +1,22 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { DEFAULT_CITY } from '../const';
-import { offers } from '../mocks/offers';
-import { changeCity, loadOffers } from './actions';
+import { AuthorizationStatus, DEFAULT_CITY } from '../const';
+// import { offers } from '../mocks/offers';
+import { changeCity, loadOffers, requireAuthorization } from './actions';
+import { OfferType } from '../types/offerType';
+
+type InitalStateType = {
+  city: string;
+  offers: OfferType[];
+  authorizationStatus: AuthorizationStatus;
+}
 
 // Объект начального состояния:
 // город (используется для отбора списка предложений в определённом городе)
 // и список предложений по аренде.
-const initialState = {
+const initialState: InitalStateType = {
   city: DEFAULT_CITY,
-  offers: offers
+  offers: [],
+  authorizationStatus: AuthorizationStatus.Unknown,
 };
 
 //Функция-редьюсер. Она принимает в качестве параметров текущий state и действие (action).
@@ -16,11 +24,12 @@ const initialState = {
 export const reducer = createReducer(initialState, (builder) => {
   builder
     .addCase(changeCity, (state, action) => {
-      const { city } = action.payload;
-      state.city = city;
+      state.city = action.payload.city;
     })
     .addCase(loadOffers, (state, action) => {
-      const { offers : offersCities } = action.payload;
-      state.offers = offersCities;
+      state.offers = action.payload;
+    })
+    .addCase(requireAuthorization, (state, action) => {
+      state.authorizationStatus = action.payload;
     });
 });

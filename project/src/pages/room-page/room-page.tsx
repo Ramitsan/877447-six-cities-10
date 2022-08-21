@@ -6,6 +6,7 @@ import { CommentType } from '../../types/commentType';
 import ImagesGallery from '../../components/images-gallery/images-gallery';
 import InsideList from '../../components/inside-list/inside-list';
 import { useAppSelector } from '../../hooks';
+import NotFound from '../404-page/404-page';
 
 type RoomPageProps = {
   comments: CommentType[];
@@ -19,7 +20,7 @@ export default function RoomPage({ comments }: RoomPageProps): JSX.Element {
 
   if (!offer) {
     return (
-      <div className="page">Предложений не найдено</div>
+      <NotFound />
     );
   }
 
