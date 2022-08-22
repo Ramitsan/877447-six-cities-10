@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов»
 
 * Студент: [Ирина Рамицан](https://up.htmlacademy.ru/react/10/user/877447).
-* Наставник: [Владимир Турецкий](https://htmlacademy.ru/profile/id439019).
+* Наставник: [Юрий Лаврухин](https://htmlacademy.ru/profile/id2038891).
 
 ---
 
