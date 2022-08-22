@@ -17,6 +17,8 @@ const enum APIRoute {
   Logout = '/logout',
 }
 
+const TIMEOUT_SHOW_ERROR = 2000;
+
 const URL_MARKER_DEFAULT = '../img/pin.svg';
 const URL_MARKER_CURRENT = '../img/pin-active.svg';
 
@@ -83,4 +85,4 @@ const CITIES_DATA = [
   },
 ];
 
-export {AppRoute, AuthorizationStatus, URL_MARKER_DEFAULT, URL_MARKER_CURRENT, DEFAULT_CITY, CITIES, APIRoute, DEFAULT_CITY_DATA, CITIES_DATA};
+export {AppRoute, AuthorizationStatus, URL_MARKER_DEFAULT, URL_MARKER_CURRENT, DEFAULT_CITY, CITIES, APIRoute, TIMEOUT_SHOW_ERROR, DEFAULT_CITY_DATA, CITIES_DATA};

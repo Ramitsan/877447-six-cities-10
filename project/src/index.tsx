@@ -6,6 +6,7 @@ import { store} from './store';
 import { comments } from './mocks/comments';
 import { CITIES } from './const';
 import { fetchOffersAction } from './store/api-actions';
+import ErrorMessage from './components/error-message/error-message';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
@@ -16,6 +17,7 @@ store.dispatch(fetchOffersAction());
 root.render(
   <React.StrictMode>
     <Provider store={store}>
+      <ErrorMessage />
       <App
         comments={comments}
         cities={CITIES}

@@ -1,14 +1,31 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
-import { APIRoute, AuthorizationStatus } from '../const';
+import { APIRoute, AuthorizationStatus,TIMEOUT_SHOW_ERROR } from '../const';
 import { OfferType } from '../types/offerType';
 import { AppDispatch, State } from '../types/stateType';
-import { loadOffers, requireAuthorization } from './actions';
+import { loadOffers, requireAuthorization, setError } from './actions';
 import {AuthDataType} from '../types/auth-data';
 import {UserDataType} from '../types/user-data';
 import { dropToken, saveToken } from '../services/token';
+import { store } from '.';
 
 // createAsyncThunk позволяет создавать асинхронные действия
+
+// Постоянное хранение ошибки в глобальном состоянии бессмысленно. Поэтому,
+// после того как мы покажем ее пользователю нашего приложения, она станет
+// бесполезна. Удалим ее из хранилища.
+// Для этого создадим синхронное действие `clearErrorAction` и с помощью
+// `setTimeout` удалим ошибку из глобального состояния.
+export const clearErrorAction = createAsyncThunk(
+  'clearError',
+  () => {
+    setTimeout(
+      () => store.dispatch(setError(null)),
+      TIMEOUT_SHOW_ERROR,
+    );
+  },
+);
+
 export const fetchOffersAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch,
   state: State,
