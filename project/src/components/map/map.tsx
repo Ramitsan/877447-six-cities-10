@@ -1,10 +1,10 @@
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useEffect, useRef } from 'react';
-import {Marker} from 'leaflet';
-import {LocationType, CityType, OfferType} from '../../types/offerType';
+import { Marker } from 'leaflet';
+import { LocationType, CityType, OfferType } from '../../types/offerType';
 import useMap from '../../hooks/useMap';
-import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT} from '../../const';
+import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT } from '../../const';
 
 type MapProps = {
   city: CityType;
@@ -12,7 +12,7 @@ type MapProps = {
   selectedLocation: LocationType | undefined;
 };
 
-export default function Map({ city, offers, selectedLocation}: MapProps): JSX.Element {
+export default function Map({ city, offers, selectedLocation }: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
@@ -29,7 +29,7 @@ export default function Map({ city, offers, selectedLocation}: MapProps): JSX.El
   });
 
   useEffect(() => {
-    if(map) {
+    if (map) {
       offers.forEach((offer) => {
         const marker = new Marker({
           lat: offer.location.latitude,
@@ -38,8 +38,8 @@ export default function Map({ city, offers, selectedLocation}: MapProps): JSX.El
 
         marker.setIcon(
           selectedLocation !== undefined &&
-          offer.location.latitude === selectedLocation?.latitude &&
-          offer.location.longitude === selectedLocation?.longitude
+            offer.location.latitude === selectedLocation?.latitude &&
+            offer.location.longitude === selectedLocation?.longitude
             ? currentCustomIcon
             : defaultCustomIcon
         ).addTo(map);
@@ -47,9 +47,18 @@ export default function Map({ city, offers, selectedLocation}: MapProps): JSX.El
     }
   }, [map, offers, selectedLocation]);
 
+  useEffect(() => {
+    map?.flyTo({
+      lat: city.location.latitude,
+      lng: city.location.longitude
+    },
+    city.location.zoom);
+  }, [city, map]);
+
   return (
     <section className="cities__map map"
-      ref = {mapRef}
+      style={{ height: '100%' }}
+      ref={mapRef}
     >
     </section>
   );

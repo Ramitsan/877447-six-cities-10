@@ -5,6 +5,7 @@ import LocationList from '../../components/location-list/location-list';
 import CardList from '../../components/card-list/card-list';
 import Map from '../../components/map/map';
 import { DEFAULT_CITY_DATA } from '../../const';
+import { CITIES_DATA } from '../../const';
 
 type MainPageProps = {
   offers: OfferType[];
@@ -16,6 +17,7 @@ export default function MainPage({ offers, cities, city }: MainPageProps): JSX.E
   const [selectedLocation, setSelectedLocation] = useState<LocationType | undefined>(undefined);
 
   const locationOffers = offers.filter((offer) => offer.city.name === city);
+  const cityLocation = CITIES_DATA.find((item) => item.name === city);
 
   const handleOfferCardHover = (hoveredOffer: number | null) => {
     if (hoveredOffer === null) {
@@ -40,7 +42,7 @@ export default function MainPage({ offers, cities, city }: MainPageProps): JSX.E
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{locationOffers.length} places to stay in Amsterdam</b>
+              <b className="places__found">{locationOffers.length} places to stay in {city}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -63,7 +65,7 @@ export default function MainPage({ offers, cities, city }: MainPageProps): JSX.E
             </section>
             <div className="cities__right-section">
               <Map
-                city={offers[0] ? offers[0].city : DEFAULT_CITY_DATA}
+                city={cityLocation ? cityLocation : DEFAULT_CITY_DATA}
                 offers={offers}
                 selectedLocation={selectedLocation}
               />

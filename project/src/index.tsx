@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import App from './components/app/app';
 import { store} from './store';
 import { comments } from './mocks/comments';
-import { cities } from './const';
+import { CITIES } from './const';
 import { fetchOffersAction } from './store/api-actions';
 
 const root = ReactDOM.createRoot(
@@ -18,7 +18,7 @@ root.render(
     <Provider store={store}>
       <App
         comments={comments}
-        cities={cities}
+        cities={CITIES}
       />
     </Provider>
   </React.StrictMode>,
