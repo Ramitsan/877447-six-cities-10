@@ -7,7 +7,6 @@ import ImagesGallery from '../../components/images-gallery/images-gallery';
 import InsideList from '../../components/inside-list/inside-list';
 import { useAppSelector } from '../../hooks';
 import NotFound from '../404-page/404-page';
-import { offers } from '../../mocks/offers';
 import Map from '../../components/map/map';
 
 type RoomPageProps = {
@@ -17,7 +16,8 @@ type RoomPageProps = {
 export default function RoomPage({ comments }: RoomPageProps): JSX.Element {
 
   const { id } = useParams();
-  const offer = useAppSelector((state) => state.offers.find((item) => item.id === Number(id)));
+  const offers = useAppSelector((state) => state.offers);
+  const offer = offers.find((item) => item.id === Number(id));
   const [offerIsFavorite, setOfferIsFavorite] = useState(offer?.isFavorite || false);
 
   if (!offer) {
