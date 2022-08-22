@@ -7,5 +7,6 @@ import { OfferType } from '../types/offerType';
 const changeCity = createAction<{ city: string }>('changeCity');
 const loadOffers = createAction<OfferType[]>('loadOffers');
 const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
+export const setError = createAction<string | null>('setError');
 
 export { changeCity, loadOffers, requireAuthorization };
