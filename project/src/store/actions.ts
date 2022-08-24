@@ -6,7 +6,8 @@ import { OfferType } from '../types/offerType';
 // изменение города и заполнение списка предложений по аренде
 const changeCity = createAction<{ city: string }>('changeCity');
 const loadOffers = createAction<OfferType[]>('loadOffers');
+const setDataLoadedStatus = createAction<boolean>('setDataLoadedStatus');
 const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
 const setError = createAction<string | null>('setError');
 
-export { changeCity, loadOffers, requireAuthorization, setError };
+export { changeCity, loadOffers, setDataLoadedStatus, requireAuthorization, setError };

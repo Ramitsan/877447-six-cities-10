@@ -9,14 +9,15 @@ import { fetchOffersAction } from './store/api-actions';
 import ErrorMessage from './components/error-message/error-message';
 import {checkAuthAction} from './store/api-actions';
 
+//диспатчим действие для получения офферов
+store.dispatch(fetchOffersAction());
+
 // checkAuthAction - действие для проверки наличия авторизации
 store.dispatch(checkAuthAction());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
-
-store.dispatch(fetchOffersAction());
 
 root.render(
   <React.StrictMode>

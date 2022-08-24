@@ -8,6 +8,8 @@ import RoomPage from '../../pages/room-page/room-page';
 import NotFound from '../../pages/404-page/404-page';
 import PrivateRoute from '../private-route/private-route';
 import { useAppSelector } from '../../hooks/index';
+import Loading from '../../pages/loading/loading';
+import {isCheckedAuth} from '../../const';
 
 type AppScreenProps = {
   comments: CommentType[];
@@ -15,7 +17,13 @@ type AppScreenProps = {
 }
 
 export default function App({ comments, cities }: AppScreenProps): JSX.Element {
-  const { offers, city } = useAppSelector((state) => state);
+  const { authorizationStatus, isDataLoaded, offers, city } = useAppSelector((state) => state);
+
+  if (isCheckedAuth(authorizationStatus) || isDataLoaded) {
+    return (
+      <Loading />
+    );
+  }
 
   return (
     <BrowserRouter>
