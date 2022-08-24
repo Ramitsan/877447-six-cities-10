@@ -17,7 +17,7 @@ const enum APIRoute {
   Logout = '/logout',
 }
 
-const TIMEOUT_SHOW_ERROR = 2000;
+const TIMEOUT_SHOW_ERROR = 5000;
 
 const URL_MARKER_DEFAULT = '../img/pin.svg';
 const URL_MARKER_CURRENT = '../img/pin-active.svg';

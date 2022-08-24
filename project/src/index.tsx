@@ -7,6 +7,10 @@ import { comments } from './mocks/comments';
 import { CITIES } from './const';
 import { fetchOffersAction } from './store/api-actions';
 import ErrorMessage from './components/error-message/error-message';
+import {checkAuthAction} from './store/api-actions';
+
+// checkAuthAction - действие для проверки наличия авторизации
+store.dispatch(checkAuthAction());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,

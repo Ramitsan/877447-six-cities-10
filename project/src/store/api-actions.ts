@@ -9,6 +9,7 @@ import {UserDataType} from '../types/user-data';
 import { dropToken, saveToken } from '../services/token';
 import { store } from '.';
 
+
 // createAsyncThunk позволяет создавать асинхронные действия
 
 // Постоянное хранение ошибки в глобальном состоянии бессмысленно. Поэтому,
