@@ -1,18 +1,25 @@
 import { useRef, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
 import { AuthDataType } from '../../types/auth-data';
-import { AppRoute } from '../../const';
+import { AppRoute, AuthorizationStatus } from '../../const';
 import { Link } from 'react-router-dom';
 import Logo from '../../components/logo/logo';
 
 export default function LoginPage(): JSX.Element {
+  const navigate = useNavigate();
+
+  const {authorizationStatus } = useAppSelector((state) => state);
+
+  if(authorizationStatus === AuthorizationStatus.Auth) {
+    navigate(AppRoute.Root);
+  }
+
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   const onSubmit = (authData: AuthDataType) => {
     dispatch(loginAction(authData));
@@ -69,7 +76,6 @@ export default function LoginPage(): JSX.Element {
                 />
               </div>
               <button
-                onClick = {() => navigate(AppRoute.Root)}
                 className="login__submit form__submit button"
                 type="submit"
               >

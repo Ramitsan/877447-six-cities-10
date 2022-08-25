@@ -1,6 +1,6 @@
 import axios, {AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError} from 'axios';
 import { getToken } from './token';
-import { processErrorHandle } from '../services/process-error-handle';
+import { processErrorHandle } from './process-error-handle';
 import {StatusCodes} from 'http-status-codes';
 
 //перечисление, в котором указываем в качестве ключей коды ошибок
@@ -46,7 +46,7 @@ export const createAPI = (): AxiosInstance => {
       if (error.response && shouldDisplayError(error.response)) {
         processErrorHandle(error.response.data.error);
       }
-      // прокидываем ошибку дальше, чтобы ее можно было поймать 
+      // прокидываем ошибку дальше, чтобы ее можно было поймать
       // и в определенном месте обработать
       throw error;
     }

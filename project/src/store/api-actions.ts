@@ -49,8 +49,10 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
   async (_arg, { dispatch, extra: api }) => {
     try {
       await api.get(APIRoute.Login);
+      //если ошибок не возникло, сервер вернул код 200
       dispatch(requireAuthorization(AuthorizationStatus.Auth));
     } catch {
+      // если сервер вернул 401
       dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
     }
   },

@@ -5,13 +5,13 @@ const enum AppRoute {
   Room = '/offer/:id'
 }
 
-const enum AuthorizationStatus {
+enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
 }
 
-const enum APIRoute {
+enum APIRoute {
   Offers = '/hotels',
   Login = '/login',
   Logout = '/logout',
