@@ -7,7 +7,7 @@ import {StatusCodes} from 'http-status-codes';
 //а в качестве значений - булевы значения
 const StatusCodeMapping: Record<number, boolean> = {
   [StatusCodes.BAD_REQUEST]: true,
-  [StatusCodes.UNAUTHORIZED]: true,
+  [StatusCodes.UNAUTHORIZED]: false,
   [StatusCodes.NOT_FOUND]: true
 };
 

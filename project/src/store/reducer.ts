@@ -1,8 +1,9 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { AuthorizationStatus, DEFAULT_CITY } from '../const';
 // import { offers } from '../mocks/offers';
-import { changeCity, loadOffers, setDataLoadedStatus, requireAuthorization, setError } from './actions';
+import { changeCity, loadOffers, setDataLoadedStatus, requireAuthorization, setError, setUserData } from './actions';
 import { OfferType } from '../types/offerType';
+import { UserDataType } from '../types/user-data';
 
 type InitalStateType = {
   city: string;
@@ -10,6 +11,7 @@ type InitalStateType = {
   authorizationStatus: AuthorizationStatus;
   isDataLoaded: boolean,
   error: string | null,
+  userData: UserDataType | null,
 }
 
 // Объект начального состояния:
@@ -23,6 +25,7 @@ const initialState: InitalStateType = {
   authorizationStatus: AuthorizationStatus.Unknown,
   isDataLoaded: false,
   error: null,
+  userData: null,
 };
 
 //Функция-редьюсер. Она принимает в качестве параметров текущий state и действие (action).
@@ -43,5 +46,8 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setError, (state, action) => {
       state.error = action.payload;
+    })
+    .addCase(setUserData, (state, action) => {
+      state.userData = action.payload;
     });
 });
