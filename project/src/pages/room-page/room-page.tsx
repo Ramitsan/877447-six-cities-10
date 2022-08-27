@@ -6,6 +6,8 @@ import { CommentType } from '../../types/commentType';
 import ImagesGallery from '../../components/images-gallery/images-gallery';
 import InsideList from '../../components/inside-list/inside-list';
 import { useAppSelector } from '../../hooks';
+import NotFound from '../404-page/404-page';
+import Map from '../../components/map/map';
 
 type RoomPageProps = {
   comments: CommentType[];
@@ -14,12 +16,13 @@ type RoomPageProps = {
 export default function RoomPage({ comments }: RoomPageProps): JSX.Element {
 
   const { id } = useParams();
-  const offer = useAppSelector((state) => state.offers.find((item) => item.id === Number(id)));
+  const offers = useAppSelector((state) => state.offers);
+  const offer = offers.find((item) => item.id === Number(id));
   const [offerIsFavorite, setOfferIsFavorite] = useState(offer?.isFavorite || false);
 
   if (!offer) {
     return (
-      <div className="page">Предложений не найдено</div>
+      <NotFound />
     );
   }
 
@@ -64,7 +67,7 @@ export default function RoomPage({ comments }: RoomPageProps): JSX.Element {
       <main className="page__main page__main--property">
         <section className="property">
           <div className="property__gallery-container container">
-            <ImagesGallery images={images} type={type}/>
+            <ImagesGallery images={images} type={type} />
           </div>
           <div className="property__container container">
             <div className="property__wrapper">
@@ -104,7 +107,7 @@ export default function RoomPage({ comments }: RoomPageProps): JSX.Element {
               </div>
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
-                <InsideList goods={goods}/>
+                <InsideList goods={goods} />
               </div>
               <div className="property__host">
                 <h2 className="property__host-title">Meet the host</h2>
@@ -131,7 +134,13 @@ export default function RoomPage({ comments }: RoomPageProps): JSX.Element {
               <ReviewsSection comments={commentsToOffer} />
             </div>
           </div>
-          <section className="property__map map"></section>
+          <section className="property__map map">
+            <Map
+              city={offer.city}
+              offers={offers}
+              selectedLocation={offer.city.location}
+            />
+          </section>
         </section>
         <div className="container">
           <section className="near-places places">

@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute } from '../../const';
 import { CommentType } from '../../types/commentType';
 import MainPage from '../../pages/main-page/main-page';
 import FavoritesPage from '../../pages/favorites-page/favorites-page';
@@ -8,6 +8,8 @@ import RoomPage from '../../pages/room-page/room-page';
 import NotFound from '../../pages/404-page/404-page';
 import PrivateRoute from '../private-route/private-route';
 import { useAppSelector } from '../../hooks/index';
+import Loading from '../../pages/loading/loading';
+import {isCheckedAuth} from '../../const';
 
 type AppScreenProps = {
   comments: CommentType[];
@@ -15,7 +17,14 @@ type AppScreenProps = {
 }
 
 export default function App({ comments, cities }: AppScreenProps): JSX.Element {
-  const { offers, city } = useAppSelector((state) => state);
+  const {authorizationStatus, isDataLoaded, offers, city } = useAppSelector((state) => state);
+
+  if (isCheckedAuth(authorizationStatus) || isDataLoaded) {
+    return (
+      <Loading />
+    );
+  }
+
   return (
     <BrowserRouter>
       <Routes>
@@ -32,7 +41,7 @@ export default function App({ comments, cities }: AppScreenProps): JSX.Element {
         <Route
           path={AppRoute.Favorites}
           element={
-            <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+            <PrivateRoute authorizationStatus={authorizationStatus}>
               <FavoritesPage
                 offers={offers}
               />
