@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import App from './components/app/app';
 import { store} from './store';
-import { comments } from './mocks/comments';
 import { CITIES } from './const';
 import { fetchOffersAction } from './store/api-actions';
 import ErrorMessage from './components/error-message/error-message';
@@ -24,7 +23,6 @@ root.render(
     <Provider store={store}>
       <ErrorMessage />
       <App
-        comments={comments}
         cities={CITIES}
       />
     </Provider>

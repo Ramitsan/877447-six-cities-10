@@ -12,13 +12,12 @@ import Loading from '../../pages/loading/loading';
 import {isCheckedAuth} from '../../const';
 
 type AppScreenProps = {
-  comments: CommentType[];
   cities: string[];
 }
 
-export default function App({ comments, cities }: AppScreenProps): JSX.Element {
-  const {authorizationStatus, isDataLoaded, offers, city } = useAppSelector((state) => state);
-
+export default function App({ cities }: AppScreenProps): JSX.Element {
+  const {authorizationStatus, isDataLoaded, offers, city, comments } = useAppSelector((state) => state);
+ 
   if (isCheckedAuth(authorizationStatus) || isDataLoaded) {
     return (
       <Loading />

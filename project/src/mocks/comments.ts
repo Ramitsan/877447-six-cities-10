@@ -3,7 +3,7 @@ import { CommentType } from '../types/commentType';
 export const comments: CommentType[] = [
   {
     idOffer: 1,
-    commentText: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
+    comment: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
     date: 'Mon Aug 01 2022 21:08:45 GMT+0300 (Москва, стандартное время)',
     id: 1,
     rating: 2.5,
@@ -16,7 +16,7 @@ export const comments: CommentType[] = [
   },
   {
     idOffer: 1,
-    commentText: 'The building is green and from 18th century.',
+    comment: 'The building is green and from 18th century.',
     date: 'Mon Aug 30 2020 15:10:45 GMT+0300 (Москва, стандартное время)',
     id: 2,
     rating: 2.5,
@@ -29,7 +29,7 @@ export const comments: CommentType[] = [
   },
   {
     idOffer: 1,
-    commentText: 'The building is green and from 18th century. A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.',
+    comment: 'The building is green and from 18th century. A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.',
     date: 'Mon Aug 25 2021 18:12:45 GMT+0300 (Москва, стандартное время)',
     id: 3,
     rating: 1.3,
@@ -42,7 +42,7 @@ export const comments: CommentType[] = [
   },
   {
     idOffer: 2,
-    commentText: 'The building is green and from 18th century. A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
+    comment: 'The building is green and from 18th century. A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
     date: 'Mon Aug 25 2021 18:12:45 GMT+0300 (Москва, стандартное время)',
     id: 1,
     rating: 4.6,
@@ -55,7 +55,7 @@ export const comments: CommentType[] = [
   },
   {
     idOffer: 3,
-    commentText: 'The building is green and from 18th century. The building is green and from 18th century. The building is green and from 18th century.',
+    comment: 'The building is green and from 18th century. The building is green and from 18th century. The building is green and from 18th century.',
     date: 'Mon Aug 18 2022 10:20:45 GMT+0300 (Москва, стандартное время)',
     id: 2,
     rating: 3.8,

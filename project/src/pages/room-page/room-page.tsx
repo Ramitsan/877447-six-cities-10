@@ -1,6 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import Logo from '../../components/logo/logo';
 import ReviewsSection from '../../components/reviews-section/reviews-section';
 import { CommentType } from '../../types/commentType';
 import ImagesGallery from '../../components/images-gallery/images-gallery';
@@ -8,17 +7,25 @@ import InsideList from '../../components/inside-list/inside-list';
 import { useAppSelector } from '../../hooks';
 import NotFound from '../404-page/404-page';
 import Map from '../../components/map/map';
+import Header from '../../components/header/header';
+import { api } from '../../store';
 
 type RoomPageProps = {
   comments: CommentType[];
 }
 
 export default function RoomPage({ comments }: RoomPageProps): JSX.Element {
-
   const { id } = useParams();
   const offers = useAppSelector((state) => state.offers);
   const offer = offers.find((item) => item.id === Number(id));
   const [offerIsFavorite, setOfferIsFavorite] = useState(offer?.isFavorite || false);
+  const [comments1, setComments] = useState<CommentType[]>([]);
+
+  useEffect(() => {
+    api.get(`/comments/${id}`).then((response) =>{
+      setComments(response.data);
+    })
+  }, [id]);
 
   if (!offer) {
     return (
@@ -35,34 +42,11 @@ export default function RoomPage({ comments }: RoomPageProps): JSX.Element {
   const isFavoriteBtnClassName = offerIsFavorite ? 'property__bookmark-button button property__bookmark-button--active' : 'property__bookmark-button button';
   const isFavoriteSvgClassName = offerIsFavorite ? 'place-card__bookmark-icon' : 'property__bookmark-icon';
 
+
+
   return (
     <div className="page">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <Logo />
-            </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <Link className="header__nav-link header__nav-link--profile" to="#">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                    <span className="header__favorite-count">3</span>
-                  </Link>
-                </li>
-                <li className="header__nav-item">
-                  <Link className="header__nav-link" to="#">
-                    <span className="header__signout">Sign out</span>
-                  </Link>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       <main className="page__main page__main--property">
         <section className="property">
@@ -131,7 +115,7 @@ export default function RoomPage({ comments }: RoomPageProps): JSX.Element {
                   </p>
                 </div>
               </div>
-              <ReviewsSection comments={commentsToOffer} />
+              <ReviewsSection comments={comments1} />
             </div>
           </div>
           <section className="property__map map">

@@ -4,6 +4,7 @@ import { AuthorizationStatus, DEFAULT_CITY } from '../const';
 import { changeCity, loadOffers, setDataLoadedStatus, requireAuthorization, setError, setUserData } from './actions';
 import { OfferType } from '../types/offerType';
 import { UserDataType } from '../types/user-data';
+import { CommentType } from '../types/commentType';
 
 type InitalStateType = {
   city: string;
@@ -12,6 +13,7 @@ type InitalStateType = {
   isDataLoaded: boolean,
   error: string | null,
   userData: UserDataType | null,
+  comments: CommentType[],
 }
 
 // Объект начального состояния:
@@ -26,6 +28,7 @@ const initialState: InitalStateType = {
   isDataLoaded: false,
   error: null,
   userData: null,
+  comments: [],
 };
 
 //Функция-редьюсер. Она принимает в качестве параметров текущий state и действие (action).

@@ -11,5 +11,6 @@ const setDataLoadedStatus = createAction<boolean>('setDataLoadedStatus');
 const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
 const setError = createAction<string | null>('setError');
 const setUserData = createAction<UserDataType>('user/setUserData');
+// const setComments = createAction<CommentType[]>('')
 
 export { changeCity, loadOffers, setDataLoadedStatus, requireAuthorization, setError, setUserData };
