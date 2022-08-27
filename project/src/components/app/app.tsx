@@ -53,7 +53,7 @@ export default function App({ cities }: AppScreenProps): JSX.Element {
         />
         <Route
           path={AppRoute.Room}
-          element={<RoomPage comments={comments} />}
+          element={<RoomPage />}
         />
         <Route
           path="*"

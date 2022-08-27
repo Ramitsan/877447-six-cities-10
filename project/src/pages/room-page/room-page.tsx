@@ -10,21 +10,17 @@ import Map from '../../components/map/map';
 import Header from '../../components/header/header';
 import { api } from '../../store';
 
-type RoomPageProps = {
-  comments: CommentType[];
-}
-
-export default function RoomPage({ comments }: RoomPageProps): JSX.Element {
+export default function RoomPage(): JSX.Element {
   const { id } = useParams();
   const offers = useAppSelector((state) => state.offers);
   const offer = offers.find((item) => item.id === Number(id));
   const [offerIsFavorite, setOfferIsFavorite] = useState(offer?.isFavorite || false);
-  const [comments1, setComments] = useState<CommentType[]>([]);
+  const [comments, setComments] = useState<CommentType[]>([]);
 
   useEffect(() => {
-    api.get(`/comments/${id}`).then((response) =>{
+    api.get(`/comments/${id}`).then((response) => {
       setComments(response.data);
-    })
+    });
   }, [id]);
 
   if (!offer) {
@@ -33,16 +29,19 @@ export default function RoomPage({ comments }: RoomPageProps): JSX.Element {
     );
   }
 
+  const handleComment = (comment: { comment: string, rating: number }) => {
+    api.post(`/comments/${id}`, comment).then((response) => {
+      setComments(response.data);
+    });
+  };
+
   const { bedrooms, description, goods, host, isPremium, maxAdults, price, rating, title, type, images } = offer;
   const { avatarUrl, isPro, name } = host;
 
-  const commentsToOffer = comments.filter((comment) => comment.idOffer === Number(id));
   const userStatus = isPro ? 'Pro' : '';
   const isPremiumOffer = isPremium ? <div className="property__mark"><span>Premium</span></div> : null;
   const isFavoriteBtnClassName = offerIsFavorite ? 'property__bookmark-button button property__bookmark-button--active' : 'property__bookmark-button button';
   const isFavoriteSvgClassName = offerIsFavorite ? 'place-card__bookmark-icon' : 'property__bookmark-icon';
-
-
 
   return (
     <div className="page">
@@ -115,7 +114,9 @@ export default function RoomPage({ comments }: RoomPageProps): JSX.Element {
                   </p>
                 </div>
               </div>
-              <ReviewsSection comments={comments1} />
+              <ReviewsSection
+                onComment={handleComment}
+                comments={comments} />
             </div>
           </div>
           <section className="property__map map">

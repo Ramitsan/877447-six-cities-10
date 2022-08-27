@@ -7,7 +7,6 @@ type ReviewProps = {
 
 export default function Review({ comment }: ReviewProps): JSX.Element {
   const {user, rating, comment: commentText, date} = comment;
-  console.log(comment);
   const {avatarUrl, name} = user;
   return (
     <li className="reviews__item">
