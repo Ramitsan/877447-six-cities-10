@@ -29,10 +29,8 @@ export default function RoomPage(): JSX.Element {
     );
   }
 
-  const handleComment = (comment: { comment: string, rating: number }) => {
-    api.post(`/comments/${id}`, comment).then((response) => {
-      setComments(response.data);
-    });
+  const handleComment = (response: any) => {
+   setComments(response);
   };
 
   const { bedrooms, description, goods, host, isPremium, maxAdults, price, rating, title, type, images } = offer;

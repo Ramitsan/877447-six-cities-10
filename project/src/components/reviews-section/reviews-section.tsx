@@ -6,7 +6,7 @@ import { AuthorizationStatus } from '../../const';
 
 type ReviewSectionProps = {
   comments: CommentType[];
-  onComment: (comment: {comment: string, rating: number}) => void
+  onComment: (response: any) => void
 }
 
 export default function ReviewsSection({comments, onComment} : ReviewSectionProps): JSX.Element {

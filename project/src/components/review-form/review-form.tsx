@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent } from 'react';
+import React, { ChangeEvent, FormEvent, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { api } from '../../store';
 
@@ -45,7 +45,7 @@ function StarInput({ onChange, initialValue }: StarInputProps): JSX.Element {
   );
 }
 
-export default function ReviewForm({onComment} : {onComment: (comment: {comment: string, rating: number}) => void}): JSX.Element {
+export default function ReviewForm({onComment} : {onComment: (response: any) => void}): JSX.Element {
   const { id } = useParams();
   const [formData, setFormData] = React.useState({
     rating: 0,
@@ -61,23 +61,34 @@ export default function ReviewForm({onComment} : {onComment: (comment: {comment:
     setFormData((last) => ({ ...last, comment: evt.target.value }));
   };
 
+  const [lock, setLock] = useState(false);
+
+  const invalid = useMemo(() => (formData.comment === '') || (formData.rating === 0), [formData]);
+
   const handleSubmit = (evt: FormEvent) => {
     evt.preventDefault();
-    onComment(formData);
+    if(lock) {return;}
+    setLock(true);
+
+    api.post(`/comments/${id}`, formData).then((response) => {
+      setFormData({comment: '', rating: 0});
+      setLock(false);
+      onComment(response.data);
+    });
   };
 
   return (
-    <form className="reviews__form form" action="#" method="post" onSubmit={handleSubmit}>
+    <form className="reviews__form form" action="#" method="post" onSubmit={handleSubmit} >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <StarInput onChange={handleStarChange} initialValue={formData.rating} />
       {(() => '')()}
 
-      <textarea onChange={handleReviewChange} className="reviews__textarea form__textarea" id="review" name="review" value={formData.comment} placeholder="Tell how was your stay, what you like and what can be improved"></textarea>
+      <textarea onChange={handleReviewChange} className="reviews__textarea form__textarea" id="review" name="review" value={formData.comment} placeholder="Tell how was your stay, what you like and what can be improved" disabled = {lock}></textarea>
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit">Submit</button>
+        <button className="reviews__submit form__submit button" type="submit" disabled = {lock || invalid}>Submit</button>
       </div>
     </form>
   );
