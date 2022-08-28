@@ -1,6 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { AuthorizationStatus, DEFAULT_CITY } from '../const';
-// import { offers } from '../mocks/offers';
 import { changeCity, loadOffers, setDataLoadedStatus, requireAuthorization, setError, setUserData, loadFavoriteOffers, updateOffer } from './actions';
 import { OfferType } from '../types/offerType';
 import { UserDataType } from '../types/user-data';

@@ -10,11 +10,11 @@ type FavoreteButtonProps = {
 export default function FavoriteButton({offer} : FavoreteButtonProps): JSX.Element {
   const dispatch = useAppDispatch();
 
-  const handleOnClick = () => {
+  const handleChangeFavorite = () => {
     dispatch(fetchFavoriteOfferAction({hotelId: offer.id, status: offer.isFavorite ? 0 : 1}));
   };
   return (
-    <button className={`place-card__bookmark-button button ${isFavorite(offer, 'place-card')}`} type="button" onClick={handleOnClick}>
+    <button className={`place-card__bookmark-button button ${isFavorite(offer, 'place-card')}`} type="button" onClick={handleChangeFavorite}>
       <svg className="place-card__bookmark-icon" width="18" height="19">
         <use xlinkHref="#icon-bookmark"></use>
       </svg>
