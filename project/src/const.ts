@@ -95,6 +95,8 @@ const SortType = {
   TopRatedFirst: 'Top rated first',
 };
 
+const MAX_COMMENTS_COUNT = 10;
+
 export {
   AppRoute,
   AuthorizationStatus,
@@ -107,5 +109,6 @@ export {
   DEFAULT_CITY_DATA,
   CITIES_DATA,
   isCheckedAuth,
-  SortType
+  SortType,
+  MAX_COMMENTS_COUNT
 };

@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
-import { SortType } from './const';
+import { SortType, MAX_COMMENTS_COUNT } from './const';
+import { CommentType } from './types/commentType';
 import { OfferType } from './types/offerType';
 
 const isFavorite = (offer: OfferType, placeCard: string) => offer.isFavorite ? `${placeCard}__bookmark-button--active` : '';
@@ -19,4 +20,12 @@ const getSortOffers = (type: string, offers: OfferType[]) => {
   }
 };
 
-export { isFavorite, humanizeReviewDate, getSortOffers };
+const sortCommentsByDate = (commentA: CommentType, commentB: CommentType) => {
+  const timeA = dayjs(commentA.date);
+  const timeB = dayjs(commentB.date);
+  return timeB.diff(timeA);
+};
+
+const getComments = (comments: CommentType[]): CommentType[] => comments.sort(sortCommentsByDate).slice(0, MAX_COMMENTS_COUNT);
+
+export { isFavorite, humanizeReviewDate, getSortOffers, getComments };

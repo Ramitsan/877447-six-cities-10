@@ -57,14 +57,14 @@ export default function MainPage({ offers, cities, city }: MainPageProps): JSX.E
                 onChangeSortType={handleChangeSortType}
               />
               <CardList
-                offers={locationOffers}
+                offers={sortedOffers}
                 onOfferCardHover={handleOfferCardHover}
               />
             </section>
             <div className="cities__right-section">
               <Map
                 city={cityLocation ? cityLocation : DEFAULT_CITY_DATA}
-                offers={sortedOffers}
+                offers={locationOffers}
                 selectedLocation={selectedLocation}
               />
             </div>
