@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import { CommentType } from '../../types/commentType';
 import MainPage from '../../pages/main-page/main-page';
 import FavoritesPage from '../../pages/favorites-page/favorites-page';
 import LoginPage from '../../pages/login-page/login-page';
@@ -16,7 +15,7 @@ type AppScreenProps = {
 }
 
 export default function App({ cities }: AppScreenProps): JSX.Element {
-  const {authorizationStatus, isDataLoaded, offers, city, comments } = useAppSelector((state) => state);
+  const {authorizationStatus, isDataLoaded, offers, city } = useAppSelector((state) => state);
 
   if (isCheckedAuth(authorizationStatus) || isDataLoaded) {
     return (

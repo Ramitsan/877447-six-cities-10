@@ -7,7 +7,7 @@ import { getComments } from '../../utils';
 
 type ReviewSectionProps = {
   comments: CommentType[];
-  onComment: (response: any) => void
+  onComment: (response: CommentType[]) => void
 }
 
 export default function ReviewsSection({ comments, onComment }: ReviewSectionProps): JSX.Element {

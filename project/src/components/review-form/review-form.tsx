@@ -1,6 +1,7 @@
 import React, { ChangeEvent, FormEvent, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { api } from '../../store';
+import { CommentType } from '../../types/commentType';
 
 type InputProps = {
   inputValue: number;
@@ -45,7 +46,7 @@ function StarInput({ onChange, initialValue }: StarInputProps): JSX.Element {
   );
 }
 
-export default function ReviewForm({onComment} : {onComment: (response: any) => void}): JSX.Element {
+export default function ReviewForm({onComment} : {onComment: (response: CommentType[]) => void}): JSX.Element {
   const { id } = useParams();
   const [formData, setFormData] = React.useState({
     rating: 0,
@@ -70,7 +71,7 @@ export default function ReviewForm({onComment} : {onComment: (response: any) => 
     if(lock) {return;}
     setLock(true);
 
-    api.post(`/comments/${id}`, formData).then((response) => {
+    api.post<CommentType[]>(`/comments/${id}`, formData).then((response) => {
       setFormData({comment: '', rating: 0});
       setLock(false);
       onComment(response.data);

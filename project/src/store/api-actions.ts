@@ -3,7 +3,7 @@ import { AxiosInstance } from 'axios';
 import { APIRoute, AuthorizationStatus,TIMEOUT_SHOW_ERROR } from '../const';
 import { OfferType } from '../types/offerType';
 import { AppDispatch, State } from '../types/stateType';
-import { loadOffers, setDataLoadedStatus, requireAuthorization, setError, setUserData } from './actions';
+import { loadOffers, setDataLoadedStatus, requireAuthorization, setError, setUserData, loadFavoriteOffers, updateOffer } from './actions';
 import {AuthDataType} from '../types/auth-data';
 import {UserDataType} from '../types/user-data';
 import { dropToken, saveToken } from '../services/token';
@@ -83,5 +83,34 @@ export const logoutAction = createAsyncThunk<void, undefined, {
     await api.delete(APIRoute.Logout);
     dropToken();
     dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+  },
+);
+
+// для получения списка избранного
+export const fetchFavoriteOffersListAction = createAsyncThunk<void, undefined, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'loadFavoreteOffers', async (_arg, { dispatch, extra: api }) => {
+    const { data } = await api.get<OfferType[]>(APIRoute.Favorite);
+    dispatch(setDataLoadedStatus(true));
+    dispatch(loadFavoriteOffers(data));
+    dispatch(setDataLoadedStatus(false));
+  },
+);
+
+// смена статуса избранного
+export const fetchFavoriteOfferAction = createAsyncThunk<void, {hotelId: number, status: number}, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'loadFavoreteOffers', async ({hotelId, status}, { dispatch, extra: api }) => {
+    const { data } = await api.post<OfferType>(`${APIRoute.Favorite}/${hotelId}/${status}`);
+    dispatch(setDataLoadedStatus(true));
+    dispatch(updateOffer(data));
+    dispatch(setDataLoadedStatus(false));
+    dispatch(fetchFavoriteOffersListAction());
   },
 );

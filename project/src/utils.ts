@@ -21,9 +21,9 @@ const getSortOffers = (type: string, offers: OfferType[]) => {
 };
 
 const sortCommentsByDate = (commentA: CommentType, commentB: CommentType) => {
-  const timeA = dayjs(commentA.date);
-  const timeB = dayjs(commentB.date);
-  return timeB.diff(timeA);
+  const dateOfCommentA = dayjs(commentA.date);
+  const dateOfCommentB = dayjs(commentB.date);
+  return dateOfCommentB.diff(dateOfCommentA);
 };
 
 const getComments = (comments: CommentType[]): CommentType[] => comments.sort(sortCommentsByDate).slice(0, MAX_COMMENTS_COUNT);

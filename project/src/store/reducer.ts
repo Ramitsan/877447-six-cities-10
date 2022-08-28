@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { AuthorizationStatus, DEFAULT_CITY } from '../const';
 // import { offers } from '../mocks/offers';
-import { changeCity, loadOffers, setDataLoadedStatus, requireAuthorization, setError, setUserData } from './actions';
+import { changeCity, loadOffers, setDataLoadedStatus, requireAuthorization, setError, setUserData, loadFavoriteOffers, updateOffer } from './actions';
 import { OfferType } from '../types/offerType';
 import { UserDataType } from '../types/user-data';
 import { CommentType } from '../types/commentType';
@@ -14,6 +14,7 @@ type InitalStateType = {
   error: string | null,
   userData: UserDataType | null,
   comments: CommentType[],
+  favoriteOffers: OfferType[],
 }
 
 // Объект начального состояния:
@@ -29,7 +30,9 @@ const initialState: InitalStateType = {
   error: null,
   userData: null,
   comments: [],
+  favoriteOffers: [],
 };
+
 
 //Функция-редьюсер. Она принимает в качестве параметров текущий state и действие (action).
 // Результатом выполнения редьюсера станет новое состояние
@@ -52,5 +55,15 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setUserData, (state, action) => {
       state.userData = action.payload;
+    })
+    .addCase(loadFavoriteOffers, (state, action) => {
+      state.favoriteOffers = action.payload;
+    })
+    // получаем оффер с обновленным статусом избранного и подменяем в списке офферов
+    .addCase(updateOffer, (state, action) => {
+      const offers = [...state.offers];
+      const index = offers.findIndex((offer) => offer.id === action.payload.id);
+      offers[index] = action.payload;
+      state.offers = offers;
     });
 });

@@ -4,18 +4,21 @@ import ReviewsSection from '../../components/reviews-section/reviews-section';
 import { CommentType } from '../../types/commentType';
 import ImagesGallery from '../../components/images-gallery/images-gallery';
 import InsideList from '../../components/inside-list/inside-list';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import NotFound from '../404-page/404-page';
 import Map from '../../components/map/map';
 import Header from '../../components/header/header';
 import { api } from '../../store';
+import { fetchFavoriteOfferAction } from '../../store/api-actions';
 
 export default function RoomPage(): JSX.Element {
   const { id } = useParams();
   const offers = useAppSelector((state) => state.offers);
   const offer = offers.find((item) => item.id === Number(id));
-  const [offerIsFavorite, setOfferIsFavorite] = useState(offer?.isFavorite || false);
+  // const [offerIsFavorite, setOfferIsFavorite] = useState(offer?.isFavorite || false);
   const [comments, setComments] = useState<CommentType[]>([]);
+
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     api.get(`/comments/${id}`).then((response) => {
@@ -29,17 +32,22 @@ export default function RoomPage(): JSX.Element {
     );
   }
 
-  const handleComment = (response: any) => {
+  const handleComment = (response: CommentType[]) => {
     setComments(response);
   };
+
+  const handleOnClick = () => {
+    dispatch(fetchFavoriteOfferAction({hotelId: offer.id, status: offer.isFavorite ? 0 : 1}));
+  };
+
 
   const { bedrooms, description, goods, host, isPremium, maxAdults, price, rating, title, type, images } = offer;
   const { avatarUrl, isPro, name } = host;
 
   const userStatus = isPro ? 'Pro' : '';
   const isPremiumOffer = isPremium ? <div className="property__mark"><span>Premium</span></div> : null;
-  const isFavoriteBtnClassName = offerIsFavorite ? 'property__bookmark-button button property__bookmark-button--active' : 'property__bookmark-button button';
-  const isFavoriteSvgClassName = offerIsFavorite ? 'place-card__bookmark-icon' : 'property__bookmark-icon';
+  const isFavoriteBtnClassName = offer.isFavorite ? 'property__bookmark-button button property__bookmark-button--active' : 'property__bookmark-button button';
+  const isFavoriteSvgClassName = offer.isFavorite ? 'place-card__bookmark-icon' : 'property__bookmark-icon';
 
   return (
     <div className="page">
@@ -57,7 +65,7 @@ export default function RoomPage(): JSX.Element {
                 <h1 className="property__name">
                   {title}
                 </h1>
-                <button className={isFavoriteBtnClassName} type="button" onClick={() => { setOfferIsFavorite(!offerIsFavorite); }}>
+                <button className={isFavoriteBtnClassName} type="button" onClick={handleOnClick}>
                   <svg className={isFavoriteSvgClassName} width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>

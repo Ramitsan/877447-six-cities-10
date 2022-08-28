@@ -15,6 +15,7 @@ enum APIRoute {
   Offers = '/hotels',
   Login = '/login',
   Logout = '/logout',
+  Favorite = '/favorite',
 }
 
 const TIMEOUT_SHOW_ERROR = 5000;
