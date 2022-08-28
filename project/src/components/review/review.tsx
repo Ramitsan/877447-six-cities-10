@@ -1,4 +1,5 @@
 import { CommentType } from '../../types/commentType';
+import { humanizeReviewDate } from '../../utils';
 import RaitingStars from '../raiting-stars/raiting-stars';
 
 type ReviewProps = {
@@ -8,6 +9,7 @@ type ReviewProps = {
 export default function Review({ comment }: ReviewProps): JSX.Element {
   const {user, rating, comment: commentText, date} = comment;
   const {avatarUrl, name} = user;
+  const reviewDate = humanizeReviewDate(date);
   return (
     <li className="reviews__item">
       <div className="reviews__user user">
@@ -19,8 +21,9 @@ export default function Review({ comment }: ReviewProps): JSX.Element {
       <div className="reviews__info">
         <RaitingStars rating={rating} />
         <p className="reviews__text">{commentText}</p>
-        <time className="reviews__time" dateTime="2019-04-24">{date}</time>
+        <time className="reviews__time" dateTime="2019-04-24">{reviewDate}</time>
       </div>
     </li>
   );
 }
+

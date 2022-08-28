@@ -30,7 +30,7 @@ export default function RoomPage(): JSX.Element {
   }
 
   const handleComment = (response: any) => {
-   setComments(response);
+    setComments(response);
   };
 
   const { bedrooms, description, goods, host, isPremium, maxAdults, price, rating, title, type, images } = offer;
@@ -114,7 +114,8 @@ export default function RoomPage(): JSX.Element {
               </div>
               <ReviewsSection
                 onComment={handleComment}
-                comments={comments} />
+                comments={comments}
+              />
             </div>
           </div>
           <section className="property__map map">

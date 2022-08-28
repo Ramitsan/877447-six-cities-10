@@ -88,6 +88,13 @@ const CITIES_DATA = [
 const isCheckedAuth = (authorizationStatus: AuthorizationStatus): boolean =>
   authorizationStatus === AuthorizationStatus.Unknown;
 
+const SortType = {
+  Popular: 'Popular',
+  PriceLowToHigh: 'Price: low to high',
+  PriceHighToLow: 'Price: high to low',
+  TopRatedFirst: 'Top rated first',
+};
+
 export {
   AppRoute,
   AuthorizationStatus,
@@ -99,5 +106,6 @@ export {
   TIMEOUT_SHOW_ERROR,
   DEFAULT_CITY_DATA,
   CITIES_DATA,
-  isCheckedAuth
+  isCheckedAuth,
+  SortType
 };

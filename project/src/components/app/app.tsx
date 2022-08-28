@@ -17,7 +17,7 @@ type AppScreenProps = {
 
 export default function App({ cities }: AppScreenProps): JSX.Element {
   const {authorizationStatus, isDataLoaded, offers, city, comments } = useAppSelector((state) => state);
- 
+
   if (isCheckedAuth(authorizationStatus) || isDataLoaded) {
     return (
       <Loading />

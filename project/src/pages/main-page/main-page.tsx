@@ -1,11 +1,13 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { LocationType, OfferType } from '../../types/offerType';
 import Header from '../../components/header/header';
 import LocationList from '../../components/location-list/location-list';
 import CardList from '../../components/card-list/card-list';
 import Map from '../../components/map/map';
-import { DEFAULT_CITY_DATA } from '../../const';
+import { DEFAULT_CITY_DATA, SortType } from '../../const';
 import { CITIES_DATA } from '../../const';
+import SortForm from '../../components/sort-form/sort-form';
+import { getSortOffers } from '../../utils';
 
 type MainPageProps = {
   offers: OfferType[];
@@ -15,9 +17,12 @@ type MainPageProps = {
 
 export default function MainPage({ offers, cities, city }: MainPageProps): JSX.Element {
   const [selectedLocation, setSelectedLocation] = useState<LocationType | undefined>(undefined);
+  const [activeSortType, setActiveSortType] = useState(SortType.Popular);
 
   const locationOffers = offers.filter((offer) => offer.city.name === city);
   const cityLocation = CITIES_DATA.find((item) => item.name === city);
+
+  const sortedOffers = getSortOffers(activeSortType, locationOffers);
 
   const handleOfferCardHover = (hoveredOffer: number | null) => {
     if (hoveredOffer === null) {
@@ -27,6 +32,10 @@ export default function MainPage({ offers, cities, city }: MainPageProps): JSX.E
       setSelectedLocation(currentOffer?.location);
     }
   };
+
+  const handleChangeSortType = useCallback((type: string) => {
+    setActiveSortType(type);
+  }, []);
 
   return (
     <>
@@ -43,21 +52,10 @@ export default function MainPage({ offers, cities, city }: MainPageProps): JSX.E
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{locationOffers.length} places to stay in {city}</b>
-              <form className="places__sorting" action="#" method="get">
-                <span className="places__sorting-caption">Sort by</span>
-                <span className="places__sorting-type" tabIndex={0}>
-                  Popular
-                  <svg className="places__sorting-arrow" width="7" height="4">
-                    <use xlinkHref="#icon-arrow-select"></use>
-                  </svg>
-                </span>
-                <ul className="places__options places__options--custom places__options--opened">
-                  <li className="places__option places__option--active" tabIndex={0}>Popular</li>
-                  <li className="places__option" tabIndex={0}>Price: low to high</li>
-                  <li className="places__option" tabIndex={0}>Price: high to low</li>
-                  <li className="places__option" tabIndex={0}>Top rated first</li>
-                </ul>
-              </form>
+              <SortForm
+                activeSortType={activeSortType}
+                onChangeSortType={handleChangeSortType}
+              />
               <CardList
                 offers={locationOffers}
                 onOfferCardHover={handleOfferCardHover}
@@ -66,7 +64,7 @@ export default function MainPage({ offers, cities, city }: MainPageProps): JSX.E
             <div className="cities__right-section">
               <Map
                 city={cityLocation ? cityLocation : DEFAULT_CITY_DATA}
-                offers={offers}
+                offers={sortedOffers}
                 selectedLocation={selectedLocation}
               />
             </div>
