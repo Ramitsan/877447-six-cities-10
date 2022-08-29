@@ -27,10 +27,6 @@ export default function useMap(mapRef: MutableRefObject<HTMLElement | null>, cit
       instance.addLayer(layer);
       setMap(instance);
       isRendered.current = true;
-
-      // return () => {
-      //   instance.remove();
-      // };
     }
   }, [mapRef, city]);
 

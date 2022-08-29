@@ -14,6 +14,7 @@ store.dispatch(fetchOffersAction());
 // checkAuthAction - действие для проверки наличия авторизации
 store.dispatch(checkAuthAction());
 
+// диспатчим действие для получения списка избранного
 store.dispatch(fetchFavoriteOffersListAction());
 
 const root = ReactDOM.createRoot(

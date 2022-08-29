@@ -32,7 +32,6 @@ const initialState: InitalStateType = {
   favoriteOffers: [],
 };
 
-
 //Функция-редьюсер. Она принимает в качестве параметров текущий state и действие (action).
 // Результатом выполнения редьюсера станет новое состояние
 export const reducer = createReducer(initialState, (builder) => {

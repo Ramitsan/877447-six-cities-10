@@ -1,8 +1,8 @@
+import { MouseEventHandler } from 'react';
 import { Link } from 'react-router-dom';
 import { OfferType } from '../../types/offerType';
 import PremiumMark from '../../components/premium-mark/premium-mark';
 import RaitingStars from '../raiting-stars/raiting-stars';
-import { MouseEventHandler } from 'react';
 import FavoriteButton from '../favorite-button/favorite-button';
 
 type CardProps = {
