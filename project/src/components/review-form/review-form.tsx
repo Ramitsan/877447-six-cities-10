@@ -2,6 +2,7 @@ import React, { ChangeEvent, FormEvent, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { api } from '../../store';
 import { CommentType } from '../../types/commentType';
+import {MIN_COMMENT_LENGTH, MAX_COMMENT_LENGTH} from '../../const';
 
 type InputProps = {
   inputValue: number;
@@ -9,6 +10,7 @@ type InputProps = {
   activeValue: number;
 }
 
+// одна звезда из звездного рейтинга
 function Input({ inputValue, onChange, activeValue }: InputProps): JSX.Element {
   const id = `${inputValue}-stars`;
   return (
@@ -34,6 +36,7 @@ type StarInputProps = {
   initialValue: number;
 }
 
+// весь звездный рейтинг
 function StarInput({ onChange, initialValue }: StarInputProps): JSX.Element {
   const starsValues = [5, 4, 3, 2, 1];
   const stars = starsValues.map((value) => (
@@ -46,7 +49,8 @@ function StarInput({ onChange, initialValue }: StarInputProps): JSX.Element {
   );
 }
 
-export default function ReviewForm({onComment} : {onComment: (response: CommentType[]) => void}): JSX.Element {
+//вся форма отзыва
+export default function ReviewForm({ onComment }: { onComment: (response: CommentType[]) => void }): JSX.Element {
   const { id } = useParams();
   const [formData, setFormData] = React.useState({
     rating: 0,
@@ -64,15 +68,16 @@ export default function ReviewForm({onComment} : {onComment: (response: CommentT
 
   const [lock, setLock] = useState(false);
 
-  const invalid = useMemo(() => (formData.comment === '') || (formData.rating === 0), [formData]);
+  const isValidCommentLength = formData.comment.length <= MIN_COMMENT_LENGTH || formData.comment.length >= MAX_COMMENT_LENGTH;
+  const invalid = useMemo(() => (isValidCommentLength) || (formData.rating === 0), [formData.rating, isValidCommentLength]);
 
   const handleSubmit = (evt: FormEvent) => {
     evt.preventDefault();
-    if(lock) {return;}
+    if (lock) { return; }
     setLock(true);
 
     api.post<CommentType[]>(`/comments/${id}`, formData).then((response) => {
-      setFormData({comment: '', rating: 0});
+      setFormData({ comment: '', rating: 0 });
       setLock(false);
       onComment(response.data);
     });
@@ -84,12 +89,24 @@ export default function ReviewForm({onComment} : {onComment: (response: CommentT
       <StarInput onChange={handleStarChange} initialValue={formData.rating} />
       {(() => '')()}
 
-      <textarea onChange={handleReviewChange} className="reviews__textarea form__textarea" id="review" name="review" value={formData.comment} placeholder="Tell how was your stay, what you like and what can be improved" disabled = {lock}></textarea>
+      <textarea
+        onChange={handleReviewChange}
+        className="reviews__textarea form__textarea"
+        id="review"
+        name="review"
+        value={formData.comment}
+        maxLength = {MAX_COMMENT_LENGTH}
+        placeholder="Tell how was your stay, what you like and what can be improved"
+        disabled={lock}
+      >
+      </textarea>
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
-          To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
+          To submit review please make sure to set <span className="reviews__star">rating</span>
+          and describe your stay with at least
+          <b className="reviews__text-amount">{MIN_COMMENT_LENGTH} and no more than {MAX_COMMENT_LENGTH}  characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled = {lock || invalid}>Submit</button>
+        <button className="reviews__submit form__submit button" type="submit" disabled={lock || invalid}>Submit</button>
       </div>
     </form>
   );

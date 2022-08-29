@@ -97,6 +97,8 @@ const SortType = {
 };
 
 const MAX_COMMENTS_COUNT = 10;
+const MIN_COMMENT_LENGTH = 50;
+const MAX_COMMENT_LENGTH = 300;
 
 export {
   AppRoute,
@@ -111,5 +113,7 @@ export {
   CITIES_DATA,
   isCheckedAuth,
   SortType,
-  MAX_COMMENTS_COUNT
+  MAX_COMMENTS_COUNT,
+  MIN_COMMENT_LENGTH,
+  MAX_COMMENT_LENGTH,
 };
