@@ -8,6 +8,7 @@ import { DEFAULT_CITY_DATA, SortType } from '../../const';
 import { CITIES_DATA } from '../../const';
 import SortForm from '../../components/sort-form/sort-form';
 import { getSortOffers } from '../../utils';
+import MainEmpty from '../../components/main-empty/main-empty';
 
 type MainPageProps = {
   offers: OfferType[];
@@ -40,37 +41,40 @@ export default function MainPage({ offers, cities, city }: MainPageProps): JSX.E
   return (
     <>
       <Header />
-      <main className="page__main page__main--index">
-        <h1 className="visually-hidden">Cities</h1>
-        <div className="tabs">
-          <section className="locations container">
-            <LocationList cities={cities} />
-          </section>
-        </div>
-        <div className="cities">
-          <div className="cities__places-container container">
-            <section className="cities__places places">
-              <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{locationOffers.length} places to stay in {city}</b>
-              <SortForm
-                activeSortType={activeSortType}
-                onChangeSortType={handleChangeSortType}
-              />
-              <CardList
-                offers={sortedOffers}
-                onOfferCardHover={handleOfferCardHover}
-              />
+      {offers.length === 0 ? <MainEmpty cities={cities}/> :
+        <main className="page__main page__main--index">
+          <h1 className="visually-hidden">Cities</h1>
+          <div className="tabs">
+            <section className="locations container">
+              <LocationList cities={cities} />
             </section>
-            <div className="cities__right-section">
-              <Map
-                city={cityLocation ? cityLocation : DEFAULT_CITY_DATA}
-                offers={locationOffers}
-                selectedLocation={selectedLocation}
-              />
+          </div>
+
+          <div className="cities">
+            <div className="cities__places-container container">
+              <section className="cities__places places">
+                <h2 className="visually-hidden">Places</h2>
+                <b className="places__found">{locationOffers.length} places to stay in {city}</b>
+                <SortForm
+                  activeSortType={activeSortType}
+                  onChangeSortType={handleChangeSortType}
+                />
+                <CardList
+                  offers={sortedOffers}
+                  onOfferCardHover={handleOfferCardHover}
+                />
+              </section>
+              <div className="cities__right-section">
+                <Map
+                  city={cityLocation ? cityLocation : DEFAULT_CITY_DATA}
+                  offers={locationOffers}
+                  selectedLocation={selectedLocation}
+                />
+              </div>
             </div>
           </div>
-        </div>
-      </main>
+        </main>
+      }
     </>
   );
 }

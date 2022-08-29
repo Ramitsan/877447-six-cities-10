@@ -3,7 +3,7 @@ import FavoriteCardList from '../../components/favorite-card-list/favorite-card-
 import { OfferType } from '../../types/offerType';
 import Header from '../../components/header/header';
 import { useAppSelector } from '../../hooks';
-import PageFavoriteEmpty from '../favorite-page-empty/favorite-page-empty';
+import FavoriteEmptyPage from '../favorite-empty-page/favorite-empty-page';
 
 type FavoritesPageProps = {
   offers: OfferType[];
@@ -13,7 +13,7 @@ export default function FavoritesPage({ offers }: FavoritesPageProps): JSX.Eleme
   const favoriteOffers = useAppSelector((state) => state.favoriteOffers);
 
   return (
-    favoriteOffers.length === 0 ? <PageFavoriteEmpty /> :
+    favoriteOffers.length === 0 ? <FavoriteEmptyPage /> :
 
       <div className="page">
         <Header />
