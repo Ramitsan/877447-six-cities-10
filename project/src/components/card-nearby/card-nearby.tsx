@@ -31,12 +31,16 @@ export default function CardNearby({ offer }: CardNearbyProps): JSX.Element {
           </button> */}
           <FavoriteButton offer={offer} />
         </div>
-        <RaitingStars rating={offer.rating} />
+        <div className="place-card__rating rating">
+          <div className="place-card__stars rating__stars">
+            <RaitingStars rating={offer.rating} />
+          </div>
+        </div>
         <h2 className="place-card__name">
           <Link to='#'>{offer.title}</Link>
         </h2>
         <p className="place-card__type">{offer.type}</p>
       </div>
-    </article>
+    </article >
   );
 }

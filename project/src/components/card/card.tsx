@@ -1,4 +1,4 @@
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { OfferType } from '../../types/offerType';
 import PremiumMark from '../../components/premium-mark/premium-mark';
 import RaitingStars from '../raiting-stars/raiting-stars';
@@ -11,7 +11,7 @@ type CardProps = {
   onMouseLeave?: MouseEventHandler<HTMLElement> | undefined;
 }
 
-export default function Card({offer, onMouseOver, onMouseLeave} : CardProps): JSX.Element {
+export default function Card({ offer, onMouseOver, onMouseLeave }: CardProps): JSX.Element {
   return (
     <article onMouseOver={onMouseOver} onMouseLeave={onMouseLeave} className="cities__card place-card">
       <PremiumMark offer={offer} placeCard={'place-card'} />
@@ -28,12 +28,16 @@ export default function Card({offer, onMouseOver, onMouseLeave} : CardProps): JS
           </div>
           <FavoriteButton offer={offer} />
         </div>
-        <RaitingStars rating={offer.rating} />
+        <div className="place-card__rating rating">
+          <div className="place-card__stars rating__stars">
+            <RaitingStars rating={offer.rating} />
+          </div>
+        </div>
         <h2 className="place-card__name">
           <Link to={`/offer/${offer.id}`}>{offer.title}</Link>
         </h2>
         <p className="place-card__type">{offer.type}</p>
       </div>
-    </article>
+    </article >
   );
 }

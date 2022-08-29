@@ -73,8 +73,7 @@ export default function MainPage({ offers, cities, city }: MainPageProps): JSX.E
               </div>
             </div>
           </div>
-        </main>
-      }
+        </main>}
     </>
   );
 }

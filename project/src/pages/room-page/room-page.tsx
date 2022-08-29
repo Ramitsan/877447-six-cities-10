@@ -12,6 +12,7 @@ import { api } from '../../store';
 import { fetchFavoriteOfferAction } from '../../store/api-actions';
 import { OfferType } from '../../types/offerType';
 import CardNearby from '../../components/card-nearby/card-nearby';
+import RaitingStars from '../../components/raiting-stars/raiting-stars';
 
 export default function RoomPage(): JSX.Element {
   const { id } = useParams();
@@ -83,8 +84,7 @@ export default function RoomPage(): JSX.Element {
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{ width: '80%' }}></span>
-                  <span className="visually-hidden">Rating</span>
+                  <RaitingStars rating={offer.rating}/>
                 </div>
                 <span className="property__rating-value rating__value">{rating}</span>
               </div>

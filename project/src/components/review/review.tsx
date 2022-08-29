@@ -7,8 +7,8 @@ type ReviewProps = {
 }
 
 export default function Review({ comment }: ReviewProps): JSX.Element {
-  const {user, rating, comment: commentText, date} = comment;
-  const {avatarUrl, name} = user;
+  const { user, rating, comment: commentText, date } = comment;
+  const { avatarUrl, name } = user;
   const reviewDate = humanizeReviewDate(date);
   return (
     <li className="reviews__item">
@@ -19,7 +19,11 @@ export default function Review({ comment }: ReviewProps): JSX.Element {
         <span className="reviews__user-name">{name}</span>
       </div>
       <div className="reviews__info">
-        <RaitingStars rating={rating} />
+        <div className="reviews__rating rating">
+          <div className="reviews__stars rating__stars">
+            <RaitingStars rating={rating} />
+          </div>
+        </div>
         <p className="reviews__text">{commentText}</p>
         <time className="reviews__time" dateTime="2019-04-24">{reviewDate}</time>
       </div>
