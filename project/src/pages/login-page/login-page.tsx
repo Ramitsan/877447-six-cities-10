@@ -1,20 +1,23 @@
-import { useRef, FormEvent } from 'react';
+import { useRef, FormEvent, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { loginAction } from '../../store/api-actions';
+import { clearErrorAction, loginAction } from '../../store/api-actions';
 import { AuthDataType } from '../../types/auth-data';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { Link } from 'react-router-dom';
 import Logo from '../../components/logo/logo';
+import { setError } from '../../store/actions';
 
 export default function LoginPage(): JSX.Element {
   const navigate = useNavigate();
 
-  const {authorizationStatus } = useAppSelector((state) => state);
+  const { authorizationStatus } = useAppSelector((state) => state);
 
-  if(authorizationStatus === AuthorizationStatus.Auth) {
-    navigate(AppRoute.Root);
-  }
+  useEffect(() => {
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      navigate(AppRoute.Root);
+    }
+  }, [authorizationStatus, navigate]);
 
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
@@ -25,14 +28,23 @@ export default function LoginPage(): JSX.Element {
     dispatch(loginAction(authData));
   };
 
+  const validatePassword = (password: HTMLInputElement) => {
+    const regNumber = /[0-9]{1,}/;
+    const regLetter = /[A-Za-z]{1,}/;
+    return !!(password.value.match(regNumber) && password.value.match(regLetter));
+  };
+
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    if (emailRef.current !== null && passwordRef.current !== null) {
+    if (emailRef.current !== null && passwordRef.current !== null && validatePassword(passwordRef.current)) {
       onSubmit({
         email: emailRef.current.value,
         password: passwordRef.current.value,
       });
+    } else {
+      dispatch(setError('Password must contain 1 letter and 1 number'));
+      dispatch(clearErrorAction());
     }
   };
 

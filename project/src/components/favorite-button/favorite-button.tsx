@@ -7,14 +7,17 @@ type FavoreteButtonProps = {
   offer: OfferType;
 }
 
-export default function FavoriteButton({offer} : FavoreteButtonProps): JSX.Element {
+export default function FavoriteButton({ offer }: FavoreteButtonProps): JSX.Element {
   const dispatch = useAppDispatch();
 
   const handleChangeFavorite = () => {
-    dispatch(fetchFavoriteOfferAction({hotelId: offer.id, status: offer.isFavorite ? 0 : 1}));
+    dispatch(fetchFavoriteOfferAction({ hotelId: offer.id, status: offer.isFavorite ? 0 : 1 }));
   };
   return (
-    <button className={`place-card__bookmark-button button ${isFavorite(offer, 'place-card')}`} type="button" onClick={handleChangeFavorite}>
+    <button className={`place-card__bookmark-button button ${isFavorite(offer, 'place-card')}`}
+      type="button"
+      onClick={handleChangeFavorite}
+    >
       <svg className="place-card__bookmark-icon" width="18" height="19">
         <use xlinkHref="#icon-bookmark"></use>
       </svg>

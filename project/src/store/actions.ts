@@ -13,4 +13,13 @@ const setUserData = createAction<UserDataType>('user/setUserData');
 const loadFavoriteOffers = createAction<OfferType[]>('loadFavoriteOffers');
 const updateOffer = createAction<OfferType>('updateOffer');
 
-export { changeCity, loadOffers, setDataLoadedStatus, requireAuthorization, setError, setUserData, loadFavoriteOffers, updateOffer };
+export {
+  changeCity,
+  loadOffers,
+  setDataLoadedStatus,
+  requireAuthorization,
+  setError,
+  setUserData,
+  loadFavoriteOffers,
+  updateOffer,
+};

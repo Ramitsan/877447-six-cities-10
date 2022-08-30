@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import ReviewsSection from '../../components/reviews-section/reviews-section';
 import { CommentType } from '../../types/commentType';
 import ImagesGallery from '../../components/images-gallery/images-gallery';
@@ -13,6 +13,7 @@ import { fetchFavoriteOfferAction } from '../../store/api-actions';
 import { OfferType } from '../../types/offerType';
 import CardNearby from '../../components/card-nearby/card-nearby';
 import RaitingStars from '../../components/raiting-stars/raiting-stars';
+import { AppRoute, AuthorizationStatus } from '../../const';
 
 export default function RoomPage(): JSX.Element {
   const { id } = useParams();
@@ -22,6 +23,8 @@ export default function RoomPage(): JSX.Element {
   const [comments, setComments] = useState<CommentType[]>([]);
 
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const { authorizationStatus } = useAppSelector((state) => state);
 
   // получаем комменты
   useEffect(() => {
@@ -48,7 +51,11 @@ export default function RoomPage(): JSX.Element {
   };
 
   const handleChangeFavorite = () => {
-    dispatch(fetchFavoriteOfferAction({ hotelId: offer.id, status: offer.isFavorite ? 0 : 1 }));
+    if(authorizationStatus === AuthorizationStatus.Auth) {
+      dispatch(fetchFavoriteOfferAction({ hotelId: offer.id, status: offer.isFavorite ? 0 : 1 }));
+    } else {
+      navigate(AppRoute.Login);
+    }
   };
 
   const { bedrooms, description, goods, host, isPremium, maxAdults, price, rating, title, type, images } = offer;
@@ -149,8 +156,8 @@ export default function RoomPage(): JSX.Element {
             <div className="near-places__list places__list">
               {offersNearby.map((offerNearby) => (
                 <CardNearby
-                  key={offer.id}
-                  offer={offerNearby}
+                  key={offerNearby.id}
+                  offerId={offerNearby.id}
                 />
               )
               )}
