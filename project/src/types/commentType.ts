@@ -7,7 +7,7 @@ type UserType = {
 
 export type CommentType = {
   idOffer: number;
-  commentText: string;
+  comment: string;
   date: string;
   id: number;
   rating: number;

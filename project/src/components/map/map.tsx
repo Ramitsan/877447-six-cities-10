@@ -29,8 +29,9 @@ export default function Map({ city, offers, selectedLocation }: MapProps): JSX.E
   });
 
   useEffect(() => {
+    let markers : Marker[] = [];
     if (map) {
-      offers.forEach((offer) => {
+      markers = offers.map((offer) => {
         const marker = new Marker({
           lat: offer.location.latitude,
           lng: offer.location.longitude
@@ -43,8 +44,12 @@ export default function Map({ city, offers, selectedLocation }: MapProps): JSX.E
             ? currentCustomIcon
             : defaultCustomIcon
         ).addTo(map);
+        return marker;
       });
     }
+    return () => {
+      markers.forEach((marker) => marker.remove());
+    };
   }, [map, offers, selectedLocation]);
 
   useEffect(() => {

@@ -11,12 +11,12 @@ function ImageItem({ src, alt }: ImageItemProps): JSX.Element {
   );
 }
 
-type ImageGalleryProps = {
+type ImagesGalleryProps = {
   images: string[],
   type: string
 }
 
-export default function ImagesGallery({images, type} : ImageGalleryProps): JSX.Element {
+export default function ImagesGallery({images, type} : ImagesGalleryProps): JSX.Element {
   const MAX_IMAGES_COUNT = 6;
   const photos = images.slice(0, MAX_IMAGES_COUNT);
 

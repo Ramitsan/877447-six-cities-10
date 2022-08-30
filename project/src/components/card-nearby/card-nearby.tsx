@@ -1,22 +1,23 @@
-import { MouseEventHandler } from 'react';
 import { Link } from 'react-router-dom';
-import { OfferType } from '../../types/offerType';
-import PremiumMark from '../../components/premium-mark/premium-mark';
-import RaitingStars from '../raiting-stars/raiting-stars';
+import { useAppSelector } from '../../hooks';
 import FavoriteButton from '../favorite-button/favorite-button';
+import PremiumMark from '../premium-mark/premium-mark';
+import RaitingStars from '../raiting-stars/raiting-stars';
 
-type CardProps = {
-  offer: OfferType;
-  onMouseOver?: MouseEventHandler<HTMLElement> | undefined;
-  onMouseLeave?: MouseEventHandler<HTMLElement> | undefined;
+type CardNearbyProps = {
+  offerId: number;
 }
 
-export default function Card({ offer, onMouseOver, onMouseLeave }: CardProps): JSX.Element {
+export default function CardNearby({ offerId }: CardNearbyProps): JSX.Element {
+  const offer = useAppSelector((state) => state.offers.find((it) => it.id === offerId));
+
+  if(!offer) {throw new Error();}
+
   return (
-    <article onMouseOver={onMouseOver} onMouseLeave={onMouseLeave} className="cities__card place-card">
+    <article className="near-places__card place-card">
       <PremiumMark offer={offer} placeCard={'place-card'} />
-      <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to="/#">
+      <div className="near-places__image-wrapper place-card__image-wrapper">
+        <Link to="#">
           <img className="place-card__image" src={offer.previewImage} width="260" height="200" alt="Place" />
         </Link>
       </div>

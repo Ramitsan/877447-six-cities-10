@@ -3,9 +3,8 @@ import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import App from './components/app/app';
 import { store} from './store';
-import { comments } from './mocks/comments';
 import { CITIES } from './const';
-import { fetchOffersAction } from './store/api-actions';
+import { fetchFavoriteOffersListAction, fetchOffersAction } from './store/api-actions';
 import ErrorMessage from './components/error-message/error-message';
 import {checkAuthAction} from './store/api-actions';
 
@@ -14,6 +13,9 @@ store.dispatch(fetchOffersAction());
 
 // checkAuthAction - действие для проверки наличия авторизации
 store.dispatch(checkAuthAction());
+
+// диспатчим действие для получения списка избранного
+store.dispatch(fetchFavoriteOffersListAction());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
@@ -24,7 +26,6 @@ root.render(
     <Provider store={store}>
       <ErrorMessage />
       <App
-        comments={comments}
         cities={CITIES}
       />
     </Provider>

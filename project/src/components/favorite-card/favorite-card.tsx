@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 import { OfferType } from '../../types/offerType';
-import {isFavorite} from '../../utils';
 import PremiumMark from '../../components/premium-mark/premium-mark';
 import RaitingStars from '../raiting-stars/raiting-stars';
+import FavoriteButton from '../favorite-button/favorite-button';
 
 type FavoriteCardProps = {
-   offer: OfferType;
+  offer: OfferType;
 }
 
 export default function FavoriteCard({ offer }: FavoriteCardProps): JSX.Element {
@@ -23,12 +23,7 @@ export default function FavoriteCard({ offer }: FavoriteCardProps): JSX.Element 
             <b className="place-card__price-value">&euro;{offer.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className={`place-card__bookmark-button ${isFavorite(offer, 'place-card')} button`} type="button">
-            <svg className="place-card__bookmark-icon" width="18" height="19">
-              <use xlinkHref="#icon-bookmark"></use>
-            </svg>
-            <span className="visually-hidden">In bookmarks</span>
-          </button>
+          <FavoriteButton offer={offer} />
         </div>
         <RaitingStars rating={offer.rating} />
         <h2 className="place-card__name">

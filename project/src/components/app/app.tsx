@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import { CommentType } from '../../types/commentType';
 import MainPage from '../../pages/main-page/main-page';
 import FavoritesPage from '../../pages/favorites-page/favorites-page';
 import LoginPage from '../../pages/login-page/login-page';
@@ -12,11 +11,10 @@ import Loading from '../../pages/loading/loading';
 import {isCheckedAuth} from '../../const';
 
 type AppScreenProps = {
-  comments: CommentType[];
   cities: string[];
 }
 
-export default function App({ comments, cities }: AppScreenProps): JSX.Element {
+export default function App({ cities }: AppScreenProps): JSX.Element {
   const {authorizationStatus, isDataLoaded, offers, city } = useAppSelector((state) => state);
 
   if (isCheckedAuth(authorizationStatus) || isDataLoaded) {
@@ -54,7 +52,7 @@ export default function App({ comments, cities }: AppScreenProps): JSX.Element {
         />
         <Route
           path={AppRoute.Room}
-          element={<RoomPage comments={comments} />}
+          element={<RoomPage />}
         />
         <Route
           path="*"
