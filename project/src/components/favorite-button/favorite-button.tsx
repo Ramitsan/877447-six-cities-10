@@ -1,4 +1,6 @@
-import { useAppDispatch } from '../../hooks';
+import { useNavigate } from 'react-router-dom';
+import { AppRoute, AuthorizationStatus } from '../../const';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchFavoriteOfferAction } from '../../store/api-actions';
 import { OfferType } from '../../types/offerType';
 import { isFavorite } from '../../utils';
@@ -9,9 +11,15 @@ type FavoreteButtonProps = {
 
 export default function FavoriteButton({ offer }: FavoreteButtonProps): JSX.Element {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const { authorizationStatus } = useAppSelector((state) => state);
 
   const handleChangeFavorite = () => {
-    dispatch(fetchFavoriteOfferAction({ hotelId: offer.id, status: offer.isFavorite ? 0 : 1 }));
+    if(authorizationStatus === AuthorizationStatus.Auth) {
+      dispatch(fetchFavoriteOfferAction({ hotelId: offer.id, status: offer.isFavorite ? 0 : 1 }));
+    } else {
+      navigate(AppRoute.Login);
+    }
   };
   return (
     <button className={`place-card__bookmark-button button ${isFavorite(offer, 'place-card')}`}
