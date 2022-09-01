@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute, AuthorizationStatus, OFFER_FAVORITE_STATUS_FALSE, OFFER_FAVORITE_STATUS_TRUE } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchFavoriteOfferAction } from '../../store/api-actions';
 import { OfferType } from '../../types/offerType';
@@ -16,7 +16,7 @@ export default function FavoriteButton({ offer }: FavoreteButtonProps): JSX.Elem
 
   const handleChangeFavorite = () => {
     if(authorizationStatus === AuthorizationStatus.Auth) {
-      dispatch(fetchFavoriteOfferAction({ hotelId: offer.id, status: offer.isFavorite ? 0 : 1 }));
+      dispatch(fetchFavoriteOfferAction({ hotelId: offer.id, status: offer.isFavorite ? OFFER_FAVORITE_STATUS_FALSE : OFFER_FAVORITE_STATUS_TRUE }));
     } else {
       navigate(AppRoute.Login);
     }

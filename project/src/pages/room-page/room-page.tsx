@@ -13,7 +13,7 @@ import { fetchFavoriteOfferAction } from '../../store/api-actions';
 import { OfferType } from '../../types/offerType';
 import CardNearby from '../../components/card-nearby/card-nearby';
 import RaitingStars from '../../components/raiting-stars/raiting-stars';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute, AuthorizationStatus, OFFER_FAVORITE_STATUS_FALSE, OFFER_FAVORITE_STATUS_TRUE } from '../../const';
 
 export default function RoomPage(): JSX.Element {
   const { id } = useParams();
@@ -52,7 +52,7 @@ export default function RoomPage(): JSX.Element {
 
   const handleChangeFavorite = () => {
     if(authorizationStatus === AuthorizationStatus.Auth) {
-      dispatch(fetchFavoriteOfferAction({ hotelId: offer.id, status: offer.isFavorite ? 0 : 1 }));
+      dispatch(fetchFavoriteOfferAction({ hotelId: offer.id, status: offer.isFavorite ? OFFER_FAVORITE_STATUS_FALSE : OFFER_FAVORITE_STATUS_TRUE }));
     } else {
       navigate(AppRoute.Login);
     }
