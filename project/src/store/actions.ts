@@ -1,5 +1,4 @@
 import { createAction } from '@reduxjs/toolkit';
-import { AuthorizationStatus } from '../const';
 import { OfferType } from '../types/offerType';
 import { UserDataType } from '../types/user-data';
 
@@ -7,7 +6,6 @@ import { UserDataType } from '../types/user-data';
 const changeCity = createAction<{ city: string }>('changeCity');
 const loadOffers = createAction<OfferType[]>('loadOffers');
 const setDataLoadedStatus = createAction<boolean>('setDataLoadedStatus');
-const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
 const setError = createAction<string | null>('setError');
 const setUserData = createAction<UserDataType>('user/setUserData');
 const loadFavoriteOffers = createAction<OfferType[]>('loadFavoriteOffers');
@@ -17,7 +15,6 @@ export {
   changeCity,
   loadOffers,
   setDataLoadedStatus,
-  requireAuthorization,
   setError,
   setUserData,
   loadFavoriteOffers,

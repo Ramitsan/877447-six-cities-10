@@ -1,9 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
-import { APIRoute, AuthorizationStatus,TIMEOUT_SHOW_ERROR } from '../const';
+import { APIRoute, TIMEOUT_SHOW_ERROR } from '../const';
 import { OfferType } from '../types/offerType';
 import { AppDispatch, State } from '../types/stateType';
-import { loadOffers, setDataLoadedStatus, requireAuthorization, setError, setUserData, loadFavoriteOffers, updateOffer } from './actions';
+import { loadOffers, setDataLoadedStatus, setError, setUserData, loadFavoriteOffers, updateOffer } from './actions';
 import {AuthDataType} from '../types/auth-data';
 import {UserDataType} from '../types/user-data';
 import { dropToken, saveToken } from '../services/token';
@@ -46,15 +46,7 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
 }>(
   'user/requireAuthorization',
   async (_arg, { dispatch, extra: api }) => {
-    try {
-      const {data} = await api.get(APIRoute.Login);
-      //если ошибок не возникло, сервер вернул код 200
-      dispatch(setUserData(data));
-      dispatch(requireAuthorization(AuthorizationStatus.Auth));
-    } catch {
-      // если сервер вернул 401
-      dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
-    }
+    await api.get(APIRoute.Login);
   },
 );
 
@@ -68,7 +60,6 @@ export const loginAction = createAsyncThunk<void, AuthDataType, {
     const {data} = await api.post<UserDataType>(APIRoute.Login, {email, password});
     dispatch(setUserData(data));
     saveToken(data.token);
-    dispatch(requireAuthorization(AuthorizationStatus.Auth));
   },
 );
 
@@ -81,7 +72,6 @@ export const logoutAction = createAsyncThunk<void, undefined, {
   async (_arg, {dispatch, extra: api}) => {
     await api.delete(APIRoute.Logout);
     dropToken();
-    dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
   },
 );
 

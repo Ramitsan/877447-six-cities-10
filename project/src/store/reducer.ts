@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { AuthorizationStatus, DEFAULT_CITY } from '../const';
-import { changeCity, loadOffers, setDataLoadedStatus, requireAuthorization, setError, setUserData, loadFavoriteOffers, updateOffer } from './actions';
+import { DEFAULT_CITY } from '../const';
+import { changeCity, loadOffers, setDataLoadedStatus, setError, setUserData, loadFavoriteOffers, updateOffer } from './actions';
 import { OfferType } from '../types/offerType';
 import { UserDataType } from '../types/user-data';
 import { CommentType } from '../types/commentType';
@@ -8,7 +8,6 @@ import { CommentType } from '../types/commentType';
 type InitalStateType = {
   city: string;
   offers: OfferType[];
-  authorizationStatus: AuthorizationStatus;
   isDataLoaded: boolean,
   error: string | null,
   userData: UserDataType | null,
@@ -27,7 +26,6 @@ type InitalStateType = {
 const initialState: InitalStateType = {
   city: DEFAULT_CITY,
   offers: [],
-  authorizationStatus: AuthorizationStatus.Unknown,
   isDataLoaded: false,
   error: null,
   userData: null,
@@ -47,9 +45,6 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setDataLoadedStatus, (state, action) => {
       state.isDataLoaded = action.payload;
-    })
-    .addCase(requireAuthorization, (state, action) => {
-      state.authorizationStatus = action.payload;
     })
     .addCase(setError, (state, action) => {
       state.error = action.payload;
