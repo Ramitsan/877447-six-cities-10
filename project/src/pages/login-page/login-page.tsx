@@ -6,12 +6,12 @@ import { AuthDataType } from '../../types/auth-data';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { Link } from 'react-router-dom';
 import Logo from '../../components/logo/logo';
-import { setError } from '../../store/actions';
+import { setError } from '../../store/error/error-process';
 
 export default function LoginPage(): JSX.Element {
   const navigate = useNavigate();
 
-  const { authorizationStatus } = useAppSelector((state) => state);
+  const authorizationStatus = useAppSelector((state) => state.USER.authorizationStatus);
 
   useEffect(() => {
     if (authorizationStatus === AuthorizationStatus.Auth) {

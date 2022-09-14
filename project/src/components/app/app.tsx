@@ -6,16 +6,36 @@ import LoginPage from '../../pages/login-page/login-page';
 import RoomPage from '../../pages/room-page/room-page';
 import NotFound from '../../pages/404-page/404-page';
 import PrivateRoute from '../private-route/private-route';
-import { useAppSelector } from '../../hooks/index';
+import { useAppDispatch, useAppSelector } from '../../hooks/index';
 import Loading from '../../pages/loading/loading';
-import {isCheckedAuth} from '../../const';
+import { isCheckedAuth } from '../../const';
+import { getAuthorizationStatus } from '../../store/user-process/selectors.user-process';
+import { getLoadedDataStatus, getOffers } from '../../store/data-process/selectors.data-process';
+import { checkAuthAction, fetchFavoriteOffersListAction, fetchOffersAction } from '../../store/api-actions';
+import { useEffect } from 'react';
 
 type AppScreenProps = {
   cities: string[];
 }
 
 export default function App({ cities }: AppScreenProps): JSX.Element {
-  const {authorizationStatus, isDataLoaded, offers, city } = useAppSelector((state) => state);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const offers = useAppSelector(getOffers);
+  const isDataLoaded = useAppSelector(getLoadedDataStatus);
+  const city = useAppSelector((state) => state.CITY.city);
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    //диспатчим действие для получения офферов
+    dispatch(fetchOffersAction());
+
+    // checkAuthAction - действие для проверки наличия авторизации
+    dispatch(checkAuthAction());
+
+    // диспатчим действие для получения списка избранного
+    dispatch(fetchFavoriteOffersListAction());
+  }, []);
 
   if (isCheckedAuth(authorizationStatus) || isDataLoaded) {
     return (

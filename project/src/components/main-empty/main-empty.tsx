@@ -7,7 +7,7 @@ type MainEmptyProps = {
 }
 
 export default function MainEmpty({ cities }: MainEmptyProps): JSX.Element {
-  const error = useAppSelector((store) => store.error);
+  const error = useAppSelector((store) => store.ERROR.error);
   const lastError = useMemo(() => error, []);
 
   return (

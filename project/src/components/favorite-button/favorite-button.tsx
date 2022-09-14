@@ -12,7 +12,7 @@ type FavoreteButtonProps = {
 export default function FavoriteButton({ offer }: FavoreteButtonProps): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { authorizationStatus } = useAppSelector((state) => state);
+  const authorizationStatus = useAppSelector((state) => state.USER.authorizationStatus);
 
   const handleChangeFavorite = () => {
     if(authorizationStatus === AuthorizationStatus.Auth) {

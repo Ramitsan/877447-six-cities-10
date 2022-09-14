@@ -5,7 +5,8 @@ import { logoutAction } from '../../store/api-actions';
 
 export default function Header(): JSX.Element {
 
-  const { userData, authorizationStatus, favoriteOffers } = useAppSelector((state) => state);
+  const { userData, authorizationStatus } = useAppSelector((state) => state.USER);
+  const favoriteOffers = useAppSelector((state) => state.FAVORITE.favoriteOffers);
   const dispatch = useAppDispatch();
 
   return (

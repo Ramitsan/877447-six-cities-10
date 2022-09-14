@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from '../../hooks/index';
-import { changeCity } from '../../store/actions';
+import { changeCity } from '../../store/city/city';
 import LocationItem from '../location-item/location-item';
 
 type LocationListProps = {
@@ -7,7 +7,7 @@ type LocationListProps = {
 }
 
 export default function LocationList({ cities }: LocationListProps): JSX.Element {
-  const selectedCity = useAppSelector((state) => state.city);
+  const selectedCity = useAppSelector((state) => state.CITY.city);
   const dispatch = useAppDispatch();
 
   const handleSelectCity = (name: string) => {

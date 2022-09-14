@@ -3,11 +3,12 @@ import { AxiosInstance } from 'axios';
 import { APIRoute, TIMEOUT_SHOW_ERROR } from '../const';
 import { OfferType } from '../types/offerType';
 import { AppDispatch, State } from '../types/stateType';
-import { loadOffers, setDataLoadedStatus, setError, setUserData, loadFavoriteOffers, updateOffer } from './actions';
+// import { setUserData } from './user-process/user-process';
 import {AuthDataType} from '../types/auth-data';
 import {UserDataType} from '../types/user-data';
 import { dropToken, saveToken } from '../services/token';
-import { store } from '.';
+// import { store } from '.';
+// import { setError } from './error/error-process';
 
 // createAsyncThunk позволяет создавать асинхронные действия
 
@@ -19,23 +20,21 @@ import { store } from '.';
 export const clearErrorAction = createAsyncThunk(
   'clearError',
   () => {
-    setTimeout(
-      () => store.dispatch(setError(null)),
-      TIMEOUT_SHOW_ERROR,
-    );
+    // setTimeout(
+    //   () => store.dispatch(setError(null)),
+    //   TIMEOUT_SHOW_ERROR,
+    // );
   },
 );
 
-export const fetchOffersAction = createAsyncThunk<void, undefined, {
+export const fetchOffersAction = createAsyncThunk<OfferType[], undefined, {
   dispatch: AppDispatch,
   state: State,
   extra: AxiosInstance
 }>(
   'loadOffers', async (_arg, { dispatch, extra: api }) => {
     const { data } = await api.get<OfferType[]>(APIRoute.Offers);
-    dispatch(setDataLoadedStatus(true));
-    dispatch(loadOffers(data));
-    dispatch(setDataLoadedStatus(false));
+    return data;
   },
 );
 
@@ -50,7 +49,7 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
   },
 );
 
-export const loginAction = createAsyncThunk<void, AuthDataType, {
+export const loginAction = createAsyncThunk<UserDataType, AuthDataType, {
   dispatch: AppDispatch,
   state: State,
   extra: AxiosInstance
@@ -58,8 +57,9 @@ export const loginAction = createAsyncThunk<void, AuthDataType, {
   'user/login',
   async ({email, password}, {dispatch, extra: api}) => {
     const {data} = await api.post<UserDataType>(APIRoute.Login, {email, password});
-    dispatch(setUserData(data));
+    // dispatch(setUserData(data));
     saveToken(data.token);
+    return data;
   },
 );
 
@@ -76,30 +76,30 @@ export const logoutAction = createAsyncThunk<void, undefined, {
 );
 
 // для получения списка избранного
-export const fetchFavoriteOffersListAction = createAsyncThunk<void, undefined, {
+export const fetchFavoriteOffersListAction = createAsyncThunk<OfferType[], undefined, {
   dispatch: AppDispatch,
   state: State,
   extra: AxiosInstance
 }>(
   'loadFavoreteOffers', async (_arg, { dispatch, extra: api }) => {
     const { data } = await api.get<OfferType[]>(APIRoute.Favorite);
-    dispatch(setDataLoadedStatus(true));
-    dispatch(loadFavoriteOffers(data));
-    dispatch(setDataLoadedStatus(false));
+    return data;
   },
 );
 
 // смена статуса избранного
-export const fetchFavoriteOfferAction = createAsyncThunk<void, {hotelId: number, status: number}, {
+export const fetchFavoriteOfferAction = createAsyncThunk<OfferType, {hotelId: number, status: number}, {
   dispatch: AppDispatch,
   state: State,
   extra: AxiosInstance
 }>(
   'loadFavoreteOffers', async ({hotelId, status}, { dispatch, extra: api }) => {
     const { data } = await api.post<OfferType>(`${APIRoute.Favorite}/${hotelId}/${status}`);
-    dispatch(setDataLoadedStatus(true));
-    dispatch(updateOffer(data));
-    dispatch(setDataLoadedStatus(false));
+
+    // dispatch(setDataLoadedStatus(true));
+    // dispatch(updateOffer(data));
+    // dispatch(setDataLoadedStatus(false));
     dispatch(fetchFavoriteOffersListAction());
+    return data;
   },
 );

@@ -11,7 +11,7 @@ type ReviewSectionProps = {
 }
 
 export default function ReviewsSection({ comments, onComment }: ReviewSectionProps): JSX.Element {
-  const { authorizationStatus } = useAppSelector((state) => state);
+  const authorizationStatus = useAppSelector((state) => state.USER.authorizationStatus);
   return (
     <section className="property__reviews reviews">
       <h2 className="reviews__title">Reviews &middot;

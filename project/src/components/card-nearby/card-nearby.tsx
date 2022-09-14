@@ -3,13 +3,14 @@ import { useAppSelector } from '../../hooks';
 import FavoriteButton from '../favorite-button/favorite-button';
 import PremiumMark from '../premium-mark/premium-mark';
 import RaitingStars from '../raiting-stars/raiting-stars';
+import {getOfferGetter} from '../../store/data-process/selectors.data-process';
 
 type CardNearbyProps = {
   offerId: number;
 }
 
 export default function CardNearby({ offerId }: CardNearbyProps): JSX.Element {
-  const offer = useAppSelector((state) => state.offers.find((it) => it.id === offerId));
+  const offer = useAppSelector(getOfferGetter(offerId));
 
   if(!offer) {throw new Error();}
 

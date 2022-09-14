@@ -14,17 +14,18 @@ import { OfferType } from '../../types/offerType';
 import CardNearby from '../../components/card-nearby/card-nearby';
 import RaitingStars from '../../components/raiting-stars/raiting-stars';
 import { AppRoute, AuthorizationStatus, OFFER_FAVORITE_STATUS_FALSE, OFFER_FAVORITE_STATUS_TRUE } from '../../const';
+import { getOfferGetter } from '../../store/data-process/selectors.data-process';
 
 export default function RoomPage(): JSX.Element {
   const { id } = useParams();
-  const offers = useAppSelector((state) => state.offers);
-  const offer = offers.find((item) => item.id === Number(id));
+  const offer = useAppSelector(getOfferGetter(Number(id)));
+  // const offer = offers.find((item) => item.id === Number(id));
   const [offersNearby, setOffersNearby] = useState<OfferType[]>([]);
   const [comments, setComments] = useState<CommentType[]>([]);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { authorizationStatus } = useAppSelector((state) => state);
+  const authorizationStatus = useAppSelector((state) => state.USER.authorizationStatus);
 
   // получаем комменты
   useEffect(() => {

@@ -106,8 +106,10 @@ const OFFER_FAVORITE_STATUS_FALSE = 0;
 enum NameSpace {
   Data = 'DATA',
   User = 'USER',
+  Favorite = 'FAVORITE',
+  Error = 'ERROR',
+  City = 'CITY'
 }
-
 
 export {
   AppRoute,
