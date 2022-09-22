@@ -2,7 +2,7 @@
 
 ![six-sities](https://user-images.githubusercontent.com/45296707/191854793-61ebc38c-1b13-46a5-9bb9-9862c06250ee.jpg)
 
-* Студент: [Ирина Рамицан](https://up.htmlacademy.ru/react/10/user/877447).
+* Студент: [Ирина Рамицан](https://github.com/Ramitsan).
 * Наставник: [Zhan Zhuridov (@InikonZS)](https://github.com/InikonZS).
 
 ---
