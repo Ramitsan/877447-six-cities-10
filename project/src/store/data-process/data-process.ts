@@ -1,13 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../const';
 import { DataProcess } from '../../types/stateType';
-import { fetchFavoriteOfferAction, fetchFavoriteOffersListAction, fetchOffersAction } from '../api-actions';
+import { fetchFavoriteOfferAction, fetchOffersAction } from '../api-actions';
 
 const initialState: DataProcess = {
   offers: [],
   isDataLoaded: false,
-  // favoriteOffers: [],
-  // favoriteDataLoaded: false,
 };
 
 export const dataProcess = createSlice({
@@ -29,13 +27,13 @@ export const dataProcess = createSlice({
         const index = offers.findIndex((offer) => offer.id === action.payload.id);
         offers[index] = action.payload;
         state.offers = offers;
-      })
-      // .addCase(fetchFavoriteOffersListAction.pending, (state) => {
-      //   state.isDataLoaded = true;
-      // })
-      // .addCase(fetchFavoriteOffersListAction.fulfilled, (state, action) => {
-      //   state.favoriteOffers = action.payload;
-      //   state.isDataLoaded = false;
-      // });
+      });
+    // .addCase(fetchFavoriteOffersListAction.pending, (state) => {
+    //   state.isDataLoaded = true;
+    // })
+    // .addCase(fetchFavoriteOffersListAction.fulfilled, (state, action) => {
+    //   state.favoriteOffers = action.payload;
+    //   state.isDataLoaded = false;
+    // });
   }
 });

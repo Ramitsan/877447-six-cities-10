@@ -1,12 +1,10 @@
 import { Link } from 'react-router-dom';
 import { OfferType } from '../../types/offerType';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppSelector } from '../../hooks';
 import Header from '../../components/header/header';
 import FavoriteCardList from '../../components/favorite-card-list/favorite-card-list';
 import FavoriteEmptyPage from '../favorite-empty-page/favorite-empty-page';
 import Loading from '../loading/loading';
-// import { useEffect } from 'react';
-// import { fetchFavoriteOffersListAction } from '../../store/api-actions';
 
 type FavoritesPageProps = {
   offers: OfferType[];
@@ -14,13 +12,6 @@ type FavoritesPageProps = {
 
 export default function FavoritesPage({ offers }: FavoritesPageProps): JSX.Element {
   const { favoriteOffers, isDataLoaded } = useAppSelector((state) => state.FAVORITE);
-  // const dispatch = useAppDispatch();
-
-  // useEffect(() => {
-  //   !isDataLoaded && dispatch(fetchFavoriteOffersListAction());
-  // }, [dispatch, isDataLoaded]);
-
-  console.log(isDataLoaded);
 
   return (
     // eslint-disable-next-line no-nested-ternary

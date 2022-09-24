@@ -4,8 +4,8 @@ import { APIRoute, TIMEOUT_SHOW_ERROR } from '../const';
 import { OfferType } from '../types/offerType';
 import { AppDispatch, State } from '../types/stateType';
 // import { setUserData } from './user-process/user-process';
-import {AuthDataType} from '../types/auth-data';
-import {UserDataType} from '../types/user-data';
+import { AuthDataType } from '../types/auth-data';
+import { UserDataType } from '../types/user-data';
 import { dropToken, saveToken } from '../services/token';
 // import { store } from '.';
 // import { setError } from './error/error-process';
@@ -17,14 +17,14 @@ import { dropToken, saveToken } from '../services/token';
 // бесполезна. Удалим ее из хранилища.
 // Для этого создадим синхронное действие `clearErrorAction` и с помощью
 // `setTimeout` удалим ошибку из глобального состояния.
-export const clearErrorAction = createAsyncThunk(
+export const clearErrorAction = createAsyncThunk<null>(
   'clearError',
-  () => {
-    // setTimeout(
-    //   () => store.dispatch(setError(null)),
-    //   TIMEOUT_SHOW_ERROR,
-    // );
-  },
+  () => new Promise((resolve) => {
+    setTimeout(
+      () => resolve(null),
+      TIMEOUT_SHOW_ERROR,
+    );
+  })
 );
 
 export const fetchOffersAction = createAsyncThunk<OfferType[], undefined, {
@@ -55,8 +55,8 @@ export const loginAction = createAsyncThunk<UserDataType, AuthDataType, {
   extra: AxiosInstance
 }>(
   'user/login',
-  async ({email, password}, {dispatch, extra: api}) => {
-    const {data} = await api.post<UserDataType>(APIRoute.Login, {email, password});
+  async ({ email, password }, { dispatch, extra: api }) => {
+    const { data } = await api.post<UserDataType>(APIRoute.Login, { email, password });
     // dispatch(setUserData(data));
     saveToken(data.token);
     return data;
@@ -69,7 +69,7 @@ export const logoutAction = createAsyncThunk<void, undefined, {
   extra: AxiosInstance
 }>(
   'user/logout',
-  async (_arg, {dispatch, extra: api}) => {
+  async (_arg, { dispatch, extra: api }) => {
     await api.delete(APIRoute.Logout);
     dropToken();
   },
@@ -88,12 +88,12 @@ export const fetchFavoriteOffersListAction = createAsyncThunk<OfferType[], undef
 );
 
 // смена статуса избранного
-export const fetchFavoriteOfferAction = createAsyncThunk<OfferType, {hotelId: number, status: number}, {
+export const fetchFavoriteOfferAction = createAsyncThunk<OfferType, { hotelId: number, status: number }, {
   dispatch: AppDispatch,
   state: State,
   extra: AxiosInstance
 }>(
-  'loadFavoreteOffers', async ({hotelId, status}, { dispatch, extra: api }) => {
+  'loadFavoreteOffers', async ({ hotelId, status }, { dispatch, extra: api }) => {
     const { data } = await api.post<OfferType>(`${APIRoute.Favorite}/${hotelId}/${status}`);
     return data;
   },
