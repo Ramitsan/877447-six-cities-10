@@ -81,7 +81,7 @@ export const fetchFavoriteOffersListAction = createAsyncThunk<OfferType[], undef
   state: State,
   extra: AxiosInstance
 }>(
-  'loadFavoreteOffers', async (_arg, { dispatch, extra: api }) => {
+  'loadFavoreteOffersList', async (_arg, { dispatch, extra: api }) => {
     const { data } = await api.get<OfferType[]>(APIRoute.Favorite);
     return data;
   },
@@ -95,11 +95,6 @@ export const fetchFavoriteOfferAction = createAsyncThunk<OfferType, {hotelId: nu
 }>(
   'loadFavoreteOffers', async ({hotelId, status}, { dispatch, extra: api }) => {
     const { data } = await api.post<OfferType>(`${APIRoute.Favorite}/${hotelId}/${status}`);
-
-    // dispatch(setDataLoadedStatus(true));
-    // dispatch(updateOffer(data));
-    // dispatch(setDataLoadedStatus(false));
-    dispatch(fetchFavoriteOffersListAction());
     return data;
   },
 );

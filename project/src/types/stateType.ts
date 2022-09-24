@@ -17,7 +17,9 @@ export type UserProcess = {
 
 export type DataProcess = {
     isDataLoaded: boolean,
-    offers: OfferType[];
+    offers: OfferType[],
+    // favoriteDataLoaded: boolean,
+    // favoriteOffers: OfferType[],
 };
 
 export type FavoriteProcess = {

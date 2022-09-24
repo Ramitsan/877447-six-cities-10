@@ -32,10 +32,14 @@ export default function App({ cities }: AppScreenProps): JSX.Element {
 
     // checkAuthAction - действие для проверки наличия авторизации
     dispatch(checkAuthAction());
-
-    // диспатчим действие для получения списка избранного
-    dispatch(fetchFavoriteOffersListAction());
   }, []);
+
+  useEffect(() => {
+    if(isCheckedAuth(authorizationStatus)) {
+      // диспатчим действие для получения списка избранного
+      dispatch(fetchFavoriteOffersListAction());
+    }
+  }, [authorizationStatus]);
 
   if (isCheckedAuth(authorizationStatus) || isDataLoaded) {
     return (
