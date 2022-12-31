@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import MainPage from '../../pages/main-page/main-page';
 import FavoritesPage from '../../pages/favorites-page/favorites-page';
@@ -48,7 +48,7 @@ export default function App({ cities }: AppScreenProps): JSX.Element {
   }
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route
           path={AppRoute.Root}
@@ -83,6 +83,6 @@ export default function App({ cities }: AppScreenProps): JSX.Element {
           element={<NotFound />}
         />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
