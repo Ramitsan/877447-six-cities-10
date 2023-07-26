@@ -1,23 +1,25 @@
 import { Body, Controller, Get, Param, Post, Delete } from '@nestjs/common';
 import { AppService } from './app.service';
-
+import { OfferType } from '../../project/src/types/offerType';
+import { hotels } from './data/hotels';
+// console.log(hotels);
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get()
+  @Get('1')
   getHello(): string {
     return this.appService.getHello();
   }
 
   @Get('hotels')
-  getHotels() {
-    return [];
+  getHotels(): Array<OfferType> {
+    return hotels;
   }
 
   @Get('/hotels/:hotelId')
-  getHotelById(@Param('hotelId') hotelId: string) {
-    return {};
+  getHotelById(@Param('hotelId') hotelId: string): OfferType {
+    return hotels.find(hotel => hotel.id == Number(hotelId));
   }
 
   @Get('/hotels/:hotelId/nearby')
