@@ -2,12 +2,12 @@ import { Body, Controller, Get, Param, Post, Delete } from '@nestjs/common';
 import { AppService } from './app.service';
 import { OfferType } from '../../project/src/types/offerType';
 import { hotels } from './data/hotels';
-// console.log(hotels);
+import { comments } from './data/comments';
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get('1')
+  @Get()
   getHello(): string {
     return this.appService.getHello();
   }
@@ -39,7 +39,9 @@ export class AppController {
 
   @Get('/comments/:hotelId')
   getComments(@Param('hotelId') hotelId: string) {
-    return [];
+    const hotelComments = comments.find(comment => comment.hotelId.toString() === hotelId).comments;
+    console.log(hotelComments, hotelId);
+    return hotelComments;
   }
 
   @Post('/comments/:hotelId')
