@@ -3,6 +3,21 @@ import { AppService } from './app.service';
 import { OfferType } from '../../project/src/types/offerType';
 import { hotels } from './data/hotels';
 import { comments } from './data/comments';
+
+interface IUser  {
+  "id": number,
+  "isPro": boolean,
+  "name": string,
+  "avatarUrl": string
+};
+
+interface IComment  {
+  "id": number,
+  "user": IUser,
+  "rating": number,
+  "comment": string,
+  "date": string
+}
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
@@ -45,8 +60,27 @@ export class AppController {
   }
 
   @Post('/comments/:hotelId')
-  postComments(@Param('hotelId') hotelId: string) {
-    return [];
+  postComments(@Param('hotelId') hotelId: string, @Body() body: {
+    rating: number,
+    comment: string
+  }) {
+    console.log(body);
+    const hotelComments = comments.find(comment => comment.hotelId.toString() === hotelId).comments;
+    const comment: IComment = {
+      id: hotelComments.length + 1,
+      user: {
+        "id": 16,
+        "isPro": true,
+        "name": "Mollie",
+        "avatarUrl": "https://10.react.pages.academy/static/avatar/7.jpg"
+    },
+      rating: body.rating,
+      comment: body.comment,
+      date: new Date().toISOString()
+    }
+    hotelComments.push(comment);
+    
+    return hotelComments;
   }
 
   @Get('/login')
