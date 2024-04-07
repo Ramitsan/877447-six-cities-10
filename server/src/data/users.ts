@@ -1,6 +1,6 @@
 export const users = [
-  {"id":16,"isPro":true,"name":"Mollie","avatarUrl":"https://10.react.pages.academy/static/avatar/7.jpg"},
-  {"id":15,"isPro":false,"name":"Kendall","avatarUrl":"https://10.react.pages.academy/static/avatar/6.jpg"},
+  {"id":16,"isPro":true,"name":"Mollie","avatarUrl":"https://10.react.pages.academy/static/avatar/7.jpg", "email": "a@mail.ru", "password": "1234a"},
+  {"id":15,"isPro":false,"name":"Kendall","avatarUrl":"https://10.react.pages.academy/static/avatar/6.jpg", "email": "b@mail.ru", "password": "1234a"},
   {"id":14,"isPro":true,"name":"Corey","avatarUrl":"https://10.react.pages.academy/static/avatar/5.jpg"},
   {"id":13,"isPro":false,"name":"Zak","avatarUrl":"https://10.react.pages.academy/static/avatar/4.jpg"},
   {"id":19,"isPro":false,"name":"Christina","avatarUrl":"https://10.react.pages.academy/static/avatar/10.jpg"},

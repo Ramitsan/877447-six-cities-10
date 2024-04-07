@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Delete } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Delete, UseGuards, Request, HttpStatus, HttpCode } from '@nestjs/common';
 import { AppService } from './app.service';
 import { OfferType } from '../../project/src/types/offerType';
 import { hotels } from './data/hotels';
@@ -6,6 +6,10 @@ import { comments } from './data/comments';
 import fetch from 'node-fetch';
 import * as fs from 'fs/promises';
 import * as path from 'path';
+import { users } from './data/users';
+import { UserDataType } from '../../project/src/types/user-data';
+import { AuthService } from './auth/auth.service';
+import { AuthGuard } from './auth/auth.guard';
 
 interface IUser  {
   "id": number,
@@ -21,9 +25,13 @@ interface IComment  {
   "comment": string,
   "date": string
 }
+
+const favorites: number[] = [];
+const OFFER_FAVORITE_STATUS_TRUE = 1;
+const OFFER_FAVORITE_STATUS_FALSE = 0;
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private readonly appService: AppService, private readonly authService: AuthService) {}
 
   @Get()
   async getHello() {
@@ -83,12 +91,22 @@ export class AppController {
 
   @Get('/favorite')
   getHotelsFavotite() {
-    return [];
+    return favorites.map(hotelId => hotels.find(hotel => hotel.id == Number(hotelId)));
   }
 
   @Post('/favorite/:hotelId/:status')
   postFavoriteStatus(@Param('hotelId') hotelId: string, @Param('status') status: string) {
-    return {};
+    console.log(hotelId, status, typeof status);
+    if(Number(status) === OFFER_FAVORITE_STATUS_TRUE) {
+      favorites.push(Number(hotelId));
+    } 
+    if(Number(status) === OFFER_FAVORITE_STATUS_FALSE) {
+      const index = favorites.findIndex(it => it == Number(hotelId));
+      if (index != -1) {
+        favorites.splice(index, 1);
+      }      
+    }   
+    return hotels.find(hotel => hotel.id == Number(hotelId));
   }
 
   @Get('/comments/:hotelId')
@@ -99,19 +117,20 @@ export class AppController {
   }
 
   @Post('/comments/:hotelId')
-  postComments(@Param('hotelId') hotelId: string, @Body() body: {
+  @UseGuards(AuthGuard)
+  postComments(@Request() req, @Param('hotelId') hotelId: string, @Body() body: {
     rating: number,
     comment: string
   }) {
-    console.log(body);
+    const user: IUser = req.user;
     const hotelComments = comments.find(comment => comment.hotelId.toString() === hotelId).comments;
     const comment: IComment = {
       id: hotelComments.length + 1,
       user: {
-        "id": 16,
-        "isPro": true,
-        "name": "Mollie",
-        "avatarUrl": "https://10.react.pages.academy/static/avatar/7.jpg"
+        id: user.id,
+        isPro: user.isPro,
+        name: user.name,
+        avatarUrl: user.avatarUrl
     },
       rating: body.rating,
       comment: body.comment,
@@ -123,19 +142,33 @@ export class AppController {
   }
 
   @Get('/login')
-  getLogin() {
-    return {};
+  @UseGuards(AuthGuard)
+  getLogin(@Request() req) {
+    const user: IUser = req.user;
+    return {...user, password: undefined};
   }
 
   @Post('/login')
-  postLogin(@Body() body: {
+  @HttpCode(200)
+  async postLogin(@Body() body: {
     email: string
     password: string
     }) {
-    return {};
+      // const foundUser = users.find(it => it.email === body.email);
+      // if(foundUser && foundUser.password == body.password) {
+        // const result: UserDataType = {
+        //   id: 25 /*'foundUser.id',*/,
+        //   email: 'foundUser.email',
+        //   token: '12345'
+        // } 
+        // return result;
+      return this.authService.signIn(body.email, body.password)
+    //   }
+    // return {};
   }
 
   @Delete('/logout')
+  @HttpCode(204)
   deleteLogout() {
     return {};
   } 
