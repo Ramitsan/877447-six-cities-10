@@ -29,6 +29,7 @@ interface IComment  {
 const favorites: number[] = [];
 const OFFER_FAVORITE_STATUS_TRUE = 1;
 const OFFER_FAVORITE_STATUS_FALSE = 0;
+const HOST = 'http://localhost:3000';
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService, private readonly authService: AuthService) {}
@@ -76,17 +77,36 @@ export class AppController {
 
   @Get('hotels')
   getHotels(): Array<OfferType> {
-    return hotels;
+    return hotels.map(hotel => {
+      return {
+        ...hotel, 
+        previewImage: HOST + hotel.previewImage,
+        images: hotel.images.map(image => HOST + image) 
+      }
+    });
   }
 
   @Get('/hotels/:hotelId')
   getHotelById(@Param('hotelId') hotelId: string): OfferType {
-    return hotels.find(hotel => hotel.id == Number(hotelId));
+    const hotel = hotels.find(hotel => hotel.id == Number(hotelId));
+    return {
+      ...hotel, 
+      previewImage: HOST + hotel.previewImage,
+      images: hotel.images.map(image => HOST + image) 
+    }
   }
 
   @Get('/hotels/:hotelId/nearby')
   getHotelsNearby(@Param('hotelId') hotelId: string) {
-    return [];
+    const currentHotel = hotels.find(hotel => hotel.id == Number(hotelId));
+    const sorted = [...hotels].sort((a, b) => Math.hypot(currentHotel.location.latitude - a.location.latitude, currentHotel.location.longitude - a.location.longitude) - Math.hypot(currentHotel.location.latitude - b.location.latitude, currentHotel.location.longitude - b.location.longitude));
+    return sorted.slice(1, 4).map(hotel => {
+      return {
+        ...hotel, 
+        previewImage: HOST + hotel.previewImage,
+        images: hotel.images.map(image => HOST + image) 
+      }
+    });
   }
 
   @Get('/favorite')
@@ -96,7 +116,6 @@ export class AppController {
 
   @Post('/favorite/:hotelId/:status')
   postFavoriteStatus(@Param('hotelId') hotelId: string, @Param('status') status: string) {
-    console.log(hotelId, status, typeof status);
     if(Number(status) === OFFER_FAVORITE_STATUS_TRUE) {
       favorites.push(Number(hotelId));
     } 
@@ -113,7 +132,16 @@ export class AppController {
   getComments(@Param('hotelId') hotelId: string) {
     const hotelComments = comments.find(comment => comment.hotelId.toString() === hotelId).comments;
     console.log(hotelComments, hotelId);
-    return hotelComments;
+    return hotelComments.map(comment => {
+      const foundUser =  users.find(user => comment.user.id === user.id);
+      return {
+        ...comment, 
+        user: {
+          ...foundUser,
+          avatarUrl: HOST + foundUser.avatarUrl,
+        }
+      }
+    });
   }
 
   @Post('/comments/:hotelId')

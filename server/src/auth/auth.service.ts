@@ -25,7 +25,7 @@ export class AuthService {
         id: Date.now(),
         isPro: false,
         name: name || username,
-        avatarUrl: "https://10.react.pages.academy/static/avatar/7.jpg", 
+        avatarUrl: `/static/avatar/${Math.floor(Math.random() * 9) + 1}.jpg`, 
         email: username, 
         password: pass
       }
