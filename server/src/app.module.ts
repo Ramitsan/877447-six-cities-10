@@ -7,7 +7,6 @@ import { JwtModule } from '@nestjs/jwt';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { UserGuard } from './auth/user.guard';
-console.log(__dirname);
 @Module({
   imports: [JwtModule,  ServeStaticModule.forRoot({   
     rootPath: join(__dirname, '../../../src/data/static'),

@@ -39,10 +39,7 @@ export class UserGuard implements CanActivate {
     return true;
   }
 
-  private extractTokenFromHeader(request: Request): string | undefined {
-    console.log(request.headers);
-    // const [type, token] = (request.headers['x-token'] as string)?.split(' ') ?? [];
-    // return type === 'Bearer' ? token : undefined;
+  private extractTokenFromHeader(request: Request): string | undefined {   
     return request.headers['x-token'] as string;
   }
 }

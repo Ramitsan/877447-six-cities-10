@@ -68,8 +68,6 @@ export class AppController {
   const images = new Array(9).fill(0).map((_, index) => {
     fetch(`https://10.react.pages.academy/static/avatar/${index + 1}.jpg`).then(res => res.blob()).then((blob: Blob) => blob.arrayBuffer())
     .then((img: ArrayBuffer) => {
-      console.log(img);
-
       fs.writeFile(path.join(__dirname, 'data/static/avatar', `${index + 1}.jpg`), Buffer.from(img));
     });
   })
@@ -220,18 +218,8 @@ export class AppController {
   async postLogin(@Body() body: {
     email: string
     password: string
-    }) {
-      // const foundUser = users.find(it => it.email === body.email);
-      // if(foundUser && foundUser.password == body.password) {
-        // const result: UserDataType = {
-        //   id: 25 /*'foundUser.id',*/,
-        //   email: 'foundUser.email',
-        //   token: '12345'
-        // } 
-        // return result;
+    }) {     
       return this.authService.signIn(body.email, body.password)
-    //   }
-    // return {};
   }
 
   @Delete('/logout')
