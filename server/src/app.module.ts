@@ -6,6 +6,7 @@ import { AuthGuard } from './auth/auth.guard';
 import { JwtModule } from '@nestjs/jwt';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { UserGuard } from './auth/user.guard';
 console.log(__dirname);
 @Module({
   imports: [JwtModule,  ServeStaticModule.forRoot({   
@@ -13,6 +14,6 @@ console.log(__dirname);
     serveRoot: '/static/'
   }),],
   controllers: [AppController],
-  providers: [AppService, AuthService, AuthGuard],
+  providers: [AppService, AuthService, AuthGuard, UserGuard],
 })
 export class AppModule {}

@@ -10,6 +10,7 @@ import { users } from './data/users';
 import { UserDataType } from '../../project/src/types/user-data';
 import { AuthService } from './auth/auth.service';
 import { AuthGuard } from './auth/auth.guard';
+import { UserGuard } from './auth/user.guard';
 
 interface IUser  {
   "id": number,
@@ -26,7 +27,7 @@ interface IComment  {
   "date": string
 }
 
-const favorites: number[] = [];
+const favorites: Record<string, number[]> = {};
 const OFFER_FAVORITE_STATUS_TRUE = 1;
 const OFFER_FAVORITE_STATUS_FALSE = 0;
 const HOST = 'http://localhost:3000';
@@ -76,56 +77,94 @@ export class AppController {
   }
 
   @Get('hotels')
-  getHotels(): Array<OfferType> {
+  @UseGuards(UserGuard)
+  getHotels(@Request() req): Array<OfferType> {
+    const user: IUser = req.user;
     return hotels.map(hotel => {
       return {
         ...hotel, 
         previewImage: HOST + hotel.previewImage,
-        images: hotel.images.map(image => HOST + image) 
+        images: hotel.images.map(image => HOST + image),
+        isFavorite: user ? (favorites[user.id.toString()] || []).includes(hotel.id) : false 
       }
     });
   }
 
   @Get('/hotels/:hotelId')
-  getHotelById(@Param('hotelId') hotelId: string): OfferType {
+  @UseGuards(UserGuard)
+  getHotelById(@Request() req, @Param('hotelId') hotelId: string): OfferType {
+    const user: IUser = req.user;
     const hotel = hotels.find(hotel => hotel.id == Number(hotelId));
     return {
       ...hotel, 
       previewImage: HOST + hotel.previewImage,
-      images: hotel.images.map(image => HOST + image) 
+      images: hotel.images.map(image => HOST + image),
+      isFavorite: user ? (favorites[user.id.toString()] || []).includes(hotel.id) : false 
     }
   }
 
   @Get('/hotels/:hotelId/nearby')
-  getHotelsNearby(@Param('hotelId') hotelId: string) {
+  @UseGuards(UserGuard)
+  getHotelsNearby(@Request() req, @Param('hotelId') hotelId: string) {
+    const user: IUser = req.user;
     const currentHotel = hotels.find(hotel => hotel.id == Number(hotelId));
     const sorted = [...hotels].sort((a, b) => Math.hypot(currentHotel.location.latitude - a.location.latitude, currentHotel.location.longitude - a.location.longitude) - Math.hypot(currentHotel.location.latitude - b.location.latitude, currentHotel.location.longitude - b.location.longitude));
     return sorted.slice(1, 4).map(hotel => {
       return {
         ...hotel, 
         previewImage: HOST + hotel.previewImage,
-        images: hotel.images.map(image => HOST + image) 
+        images: hotel.images.map(image => HOST + image),
+        isFavorite: user ? (favorites[user.id.toString()] || []).includes(hotel.id) : false  
       }
     });
   }
 
   @Get('/favorite')
-  getHotelsFavotite() {
-    return favorites.map(hotelId => hotels.find(hotel => hotel.id == Number(hotelId)));
+  @UseGuards(AuthGuard)
+  getHotelsFavotite(@Request() req) {
+    const user: IUser = req.user;
+    const userFavorites = favorites[user.id.toString()] || [];
+    const favoritesIds = userFavorites.filter(hotelId => hotels.find(hotel => hotel.id == Number(hotelId)));
+    const hotelsMap: Record<number, OfferType> = {};
+    hotels.forEach((hotel) => {
+      hotelsMap[hotel.id] = hotel;
+    });
+    return favoritesIds.map((hotelId: number) => {
+      const hotel = hotelsMap[hotelId];
+      return {
+        ...hotel, 
+        previewImage: HOST + hotel.previewImage,
+        images: hotel.images.map(image => HOST + image),
+        isFavorite: true
+      }
+    });
   }
 
   @Post('/favorite/:hotelId/:status')
-  postFavoriteStatus(@Param('hotelId') hotelId: string, @Param('status') status: string) {
+  @UseGuards(AuthGuard)
+  postFavoriteStatus(@Request() req, @Param('hotelId') hotelId: string, @Param('status') status: string) {
+    const user: IUser = req.user;
+    let userFavorites = favorites[user.id.toString()];
+    if(!userFavorites) {
+      favorites[user.id.toString()] = [];
+      userFavorites = favorites[user.id.toString()];
+    }
     if(Number(status) === OFFER_FAVORITE_STATUS_TRUE) {
-      favorites.push(Number(hotelId));
+      userFavorites.push(Number(hotelId));
     } 
     if(Number(status) === OFFER_FAVORITE_STATUS_FALSE) {
-      const index = favorites.findIndex(it => it == Number(hotelId));
+      const index = userFavorites.findIndex(it => it == Number(hotelId));
       if (index != -1) {
-        favorites.splice(index, 1);
+        userFavorites.splice(index, 1);
       }      
     }   
-    return hotels.find(hotel => hotel.id == Number(hotelId));
+    const hotel = hotels.find(hotel => hotel.id == Number(hotelId));
+    return {
+      ...hotel, 
+      previewImage: HOST + hotel.previewImage,
+      images: hotel.images.map(image => HOST + image),
+      isFavorite: Number(status) === OFFER_FAVORITE_STATUS_TRUE ? true : false
+     }
   }
 
   @Get('/comments/:hotelId')
