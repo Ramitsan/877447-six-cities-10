@@ -20,8 +20,8 @@ enum APIRoute {
 
 const TIMEOUT_SHOW_ERROR = 5000;
 
-const URL_MARKER_DEFAULT = '../img/pin.svg';
-const URL_MARKER_CURRENT = '../img/pin-active.svg';
+const URL_MARKER_DEFAULT = './img/pin.svg';
+const URL_MARKER_CURRENT = './img/pin-active.svg';
 
 const DEFAULT_CITY = 'Paris';
 const DEFAULT_CITY_DATA = {
