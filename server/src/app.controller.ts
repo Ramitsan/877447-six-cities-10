@@ -7,7 +7,6 @@ import fetch from 'node-fetch';
 import * as fs from 'fs/promises';
 import * as path from 'path';
 import { users } from './data/users';
-import { UserDataType } from '../../project/src/types/user-data';
 import { AuthService } from './auth/auth.service';
 import { AuthGuard } from './auth/auth.guard';
 import { UserGuard } from './auth/user.guard';

@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { users } from '../data/users';
 import { JwtService } from '@nestjs/jwt';
 import { UserDataType } from '../../../project/src/types/user-data';
@@ -15,9 +15,6 @@ export class AuthService {
     pass: string,
   ) {
     let user = await users.find((it) => it.email == username && it.password == pass);
-    // if (user?.password !== pass) {
-    //   throw new UnauthorizedException();
-    // }
 
     if(!user) {
       const name = username.split('').find(it => it == '@') ? username.split('@')[0] : username;
