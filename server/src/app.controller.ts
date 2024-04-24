@@ -29,7 +29,7 @@ interface IComment  {
 const favorites: Record<string, number[]> = {};
 const OFFER_FAVORITE_STATUS_TRUE = 1;
 const OFFER_FAVORITE_STATUS_FALSE = 0;
-const HOST = (process.env.HOST || 'http://localhost') + ':' + (process.env.PORT || 3000);
+const HOST = process.env.HOST || ('http://localhost:'  + (process.env.PORT || 3000));
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService, private readonly authService: AuthService) {}
